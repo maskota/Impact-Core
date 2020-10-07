@@ -8,6 +8,8 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import galaxyspace.core.register.GSItems;
+import gregtech.api.util.GT_ModHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.EntityList;
@@ -19,10 +21,15 @@ import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import org.lwjgl.input.Keyboard;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static com.impact.loader.ItemRegistery.CoalBlock;
+import static com.impact.util.Utilits.Blockstack;
+import static com.impact.util.Utilits.Itemstack;
 
 @SuppressWarnings("ALL")
 public class impactEvents {
@@ -75,17 +82,14 @@ public class impactEvents {
 
         try {
             Class.forName("net.minecraftxray.loader.XRayForgeTweaker");
-            Minecraft.getMinecraft().crashed(new CrashReport("", e));
+            Minecraft.getMinecraft().crashed(new CrashReport("Cheater off X-ray", e));
             return;
         } catch (Exception E) {}
 
         try {
             Class.forName("de.Kradxn.Xray.mod_Xray");
-            Minecraft.getMinecraft().crashed(new CrashReport("", e));
+            Minecraft.getMinecraft().crashed(new CrashReport("Cheater off X-ray", e));
             return;
         } catch (Exception E) {}
-
     }
-
-
 }
