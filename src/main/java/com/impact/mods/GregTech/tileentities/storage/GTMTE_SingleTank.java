@@ -192,7 +192,6 @@ public class GTMTE_SingleTank extends GT_MetaTileEntity_MultiBlockBase implement
                 // output as much as possible
                 final FluidStack tempStack = storedFluid.copy();
                 tempStack.amount = possibleOutput;
-                // TODO possible concurrent modification exception as pullFluid calls remove() without an iterator
                 tempStack.amount = mfh.pullFluid(tempStack, true);
                 super.addOutput(tempStack);
             }

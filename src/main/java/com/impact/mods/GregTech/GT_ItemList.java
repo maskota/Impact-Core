@@ -46,7 +46,7 @@ public enum GT_ItemList implements IItemContainer {
     Generator_Semi_Turbine_MV, Generator_Semi_Turbine_HV, Generator_Steam_Turbine_EV, Generator_Diesel_EV, Generator_Gas_Turbine_EV,
     Generator_Semi_Turbine_EV, Generator_Steam_Turbine_IV, Generator_Diesel_IV, Generator_Gas_Turbine_IV, Generator_Semi_Turbine_IV,
 
-    Water_Tank, Creative_Tank,
+    Water_Tank, Creative_Tank, Regulator_Tank_Hatch,
 
     //HATCHES
     Hatch_Output_Prim, Bus_Input_Prim, Bus_Output_Prim, Hatch_Output_Pump,
@@ -79,7 +79,7 @@ public enum GT_ItemList implements IItemContainer {
     PowerStation, PowerReactor, PowerTurbine, Machine_FreezSolidifier, Machine_BlastSmelter, WaterDrill, BasicWaterPump,
     AdvVacuumFreezer, LapPowerStation, SawMill, Pyrolyse, AdvPyrolyse, Machine_FreezerSolidifier,
 
-    Naquadah_multi, Naquadah_Liquid_multi, Heavy_Metal_Cyclone, Naquadah_Liquid_Enriched, Moon_Miner,
+    Naquadah_multi, Naquadah_Liquid_multi, Heavy_Metal_Cyclone, Naquadah_Liquid_Enriched, Moon_Miner, Large_Multi_Tank,
 
     //Cases
     UpgradeCasingT1, UpgradeCasingT2, UpgradeCasingT3, UpgradeCasingT4, PBECasing, EngraverCasing, AssemblerCasing,
