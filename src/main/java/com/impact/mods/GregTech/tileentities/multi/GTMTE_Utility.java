@@ -1,5 +1,7 @@
 package com.impact.mods.GregTech.tileentities.multi;
 
+import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_EnergyMulti;
+import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_EnergyTunnel;
 import com.impact.mods.GregTech.blocks.Casing_Helper;
 import com.impact.mods.GregTech.gui.GUI_BASE;
 import com.impact.mods.GregTech.tileentities.multi.debug.GT_MetaTileEntity_MultiParallelBlockBase;
@@ -10,6 +12,7 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 import gregtech.api.objects.GT_RenderedTexture;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
@@ -22,6 +25,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.input.Keyboard;
 
 import static com.impact.loader.ItemRegistery.IGlassBlock;
+import static com.mojang.realmsclient.gui.ChatFormatting.*;
+import static com.mojang.realmsclient.gui.ChatFormatting.YELLOW;
 
 public class GTMTE_Utility extends GT_MetaTileEntity_MultiParallelBlockBase {
 
@@ -70,7 +75,9 @@ public class GTMTE_Utility extends GT_MetaTileEntity_MultiParallelBlockBase {
                 .addInfo("One-block machine analog")
                 .addParallelInfo(1,256)
                 .addInfo("Parallel Point will upped Upgrade Casing")
-                .addTypeMachine("Compressor, Extractor, Canning, Packager, Recycler, Hammer, Lathe")
+                .addTypeMachine("Compressor, Extractor, Canning,")
+                .addTypeMachine("Packager, Recycler, Hammer,")
+                .addTypeMachine("Lathe, Polarizer")
                 .addScrew()
                 .addSeparatedBus()
                 .addSeparator()
@@ -101,7 +108,7 @@ public class GTMTE_Utility extends GT_MetaTileEntity_MultiParallelBlockBase {
         return mMode == 0 ? GT_Recipe.GT_Recipe_Map.sCompressorRecipes : mMode == 1 ? GT_Recipe.GT_Recipe_Map.sExtractorRecipes :
                mMode == 2 ? GT_Recipe.GT_Recipe_Map.sCannerRecipes : mMode == 3 ? GT_Recipe.GT_Recipe_Map.sBoxinatorRecipes :
                mMode == 4 ? GT_Recipe.GT_Recipe_Map.sRecyclerRecipes : mMode == 5 ? GT_Recipe.GT_Recipe_Map.sHammerRecipes :
-                            GT_Recipe.GT_Recipe_Map.sLatheRecipes;
+               mMode == 6 ? GT_Recipe.GT_Recipe_Map.sLatheRecipes : GT_Recipe.GT_Recipe_Map.sPolarizerRecipes;
     }
 
     private int mLevel = 0;
@@ -209,6 +216,8 @@ public class GTMTE_Utility extends GT_MetaTileEntity_MultiParallelBlockBase {
             }
         }
 
+        setParallel(this.mLevel);
+
         if(this.mInputBusses.size() > 6) formationChecklist = false;
         if(this.mOutputBusses.size() > 3) formationChecklist = false;
         if(this.mEnergyHatches.size() > 4) formationChecklist = false;
@@ -216,11 +225,6 @@ public class GTMTE_Utility extends GT_MetaTileEntity_MultiParallelBlockBase {
         if(this.mMaintenanceHatches.size() != 1) formationChecklist = false;
 
         return formationChecklist;
-    }
-
-    @Override
-    public int getParallel() {
-        return this.mLevel;
     }
 
     @Override
@@ -246,9 +250,10 @@ public class GTMTE_Utility extends GT_MetaTileEntity_MultiParallelBlockBase {
         else
         if (aSide == getBaseMetaTileEntity().getFrontFacing()) {
             mMode++;
-            if (mMode > 6) mMode = 0;
+            if (mMode > 7) mMode = 0;
 
-            mModed = (mMode == 0 ? " Compressor " : mMode == 1 ? " Extractor " : mMode == 2 ? " Canning " : mMode == 3 ? " Packager " : mMode == 4 ? " Recycler " : mMode == 5 ? " Hammer " : " Lathe ");
+            mModed = (mMode == 0 ? " Compressor " : mMode == 1 ? " Extractor " : mMode == 2 ? " Canning " :
+                    mMode == 3 ? " Packager " : mMode == 4 ? " Recycler " : mMode == 5 ? " Hammer " : mMode == 6 ? " Lathe " : " Polarizer ");
             GT_Utility.sendChatToPlayer(aPlayer, "Now" + EnumChatFormatting.YELLOW + mModed + EnumChatFormatting.RESET + "Mode");
         }
     }

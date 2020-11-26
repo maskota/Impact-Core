@@ -46,7 +46,7 @@ public enum GT_ItemList implements IItemContainer {
     Generator_Semi_Turbine_MV, Generator_Semi_Turbine_HV, Generator_Steam_Turbine_EV, Generator_Diesel_EV, Generator_Gas_Turbine_EV,
     Generator_Semi_Turbine_EV, Generator_Steam_Turbine_IV, Generator_Diesel_IV, Generator_Gas_Turbine_IV, Generator_Semi_Turbine_IV,
 
-    Water_Tank,
+    Water_Tank, Creative_Tank,
 
     //HATCHES
     Hatch_Output_Prim, Bus_Input_Prim, Bus_Output_Prim, Hatch_Output_Pump,
@@ -67,7 +67,7 @@ public enum GT_ItemList implements IItemContainer {
     Diode_4A_ULV, Diode_4A_LV, Diode_4A_MV, Diode_4A_HV, Diode_4A_EV, Diode_4A_IV, Diode_4A_LuV, Diode_4A_ZPM, Diode_4A_UV,
     Diode_16A_ULV, Diode_16A_LV, Diode_16A_MV, Diode_16A_HV, Diode_16A_EV, Diode_16A_IV, Diode_16A_LuV, Diode_16A_ZPM, Diode_16A_UV,
 
-    Tank_Hatch,
+    Tank_Hatch, Quadruple_Input_Hatch, Nonuple_Input_Hatch,
     Parallel_Hatch_IN4, Parallel_Hatch_OUT4, Parallel_Hatch_IN16, Parallel_Hatch_OUT16, Parallel_Hatch_IN64, Parallel_Hatch_OUT64,
     Parallel_Hatch_IN256, Parallel_Hatch_OUT256,
 
@@ -80,12 +80,13 @@ public enum GT_ItemList implements IItemContainer {
 
     Machine_PBE, Machine_LaserEngraver, Machine_Assembler, Machine_Centrifuge, Machine_Electrolyzer, Machine_Wire, Machine_Supply,
     Machine_Utility, Machine_Brewmenter, Machine_ArcFurnace, Machine_Cutting, Machine_Extradifier, Machine_Macerator, Machine_Mixer,
-    Machine_Siftarator, Machine_DDDPrinter,
+    Machine_Siftarator, Machine_DDDPrinter, Machine_AdvDDDPrinter,
     PowerStation, PowerReactor, PowerTurbine, Machine_FreezSolidifier, Machine_BlastSmelter, WaterDrill, BasicWaterPump,
     AdvVacuumFreezer, LapPowerStation, SawMill, Pyrolyse, AdvPyrolyse, Machine_FreezerSolidifier,
 
-    Naquadah_multi, Naquadah_Liquid_multi, Heavy_Metal_Cyclone, Naquadah_Liquid_Enriched, Moon_Miner, Parallel_Computer,
-    Communication_Tower, Space_Satellite,
+
+    Naquadah_multi, Naquadah_Liquid_multi, Heavy_Metal_Cyclone, Naquadah_Liquid_Enriched, Moon_Miner, Rail_Assembler,
+    Parallel_Computer, Communication_Tower, Space_Satellite,
 
     //Cases
     UpgradeCasingT1, UpgradeCasingT2, UpgradeCasingT3, UpgradeCasingT4, PBECasing, EngraverCasing, AssemblerCasing,
@@ -93,7 +94,7 @@ public enum GT_ItemList implements IItemContainer {
     CuttingCasing, MixingCasing,
 
     NukeTurbineCasing, ElectromagneticCasing, ExtradificationCasing, MacerationCasing, DDDPrinterCasing, DDDPrinterCasing3x3,
-    DDDPrinterCasing4x4, PrimitiveWaterPumpCase, LSCC, SawCase, NqCasing, CycloneCasing, MoonMinerCasing,
+    DDDPrinterCasing4x4, PrimitiveWaterPumpCase, LSCC, SawCase, NqCasing, CycloneCasing, MoonMinerCasing, RailAssemblerCasing,
 
     Casing_Farm,
 

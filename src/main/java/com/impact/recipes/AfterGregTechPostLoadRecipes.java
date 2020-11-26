@@ -1,7 +1,5 @@
 package com.impact.recipes;
 
-import com.impact.common.block.blocks.Block_Liquid;
-import com.impact.loader.ItemRegistery;
 import com.impact.recipes.debug.DEBUG_Recipe;
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.Materials;
@@ -40,6 +38,10 @@ public class AfterGregTechPostLoadRecipes implements Runnable {
         removeRecipeByOutput(GT_ModHandler.getIC2Item("quantumBodyarmor", 1, GT_Values.W));
         removeRecipeByOutput(GT_ModHandler.getIC2Item("quantumLeggings", 1, GT_Values.W));
         removeRecipeByOutput(GT_ModHandler.getIC2Item("quantumBoots", 1, GT_Values.W));
+        removeRecipeByOutput(GT_ModHandler.getModItem("IC2","itemBatChargeRE", 1L, GT_Values.W));
+        removeRecipeByOutput(GT_ModHandler.getModItem("IC2","itemBatChargeAdv", 1L, GT_Values.W));
+        removeRecipeByOutput(GT_ModHandler.getModItem("IC2","itemBatChargeCrystal", 1L, GT_Values.W));
+        removeRecipeByOutput(GT_ModHandler.getModItem("IC2","itemBatChargeLamaCrystal", 1L, GT_Values.W));
 
         removeRecipeByOutput(GT_ModHandler.getModItem("GraviSuite", "itemSimpleItem", 1L, 1), true, false, false);
         removeRecipeByOutput(GT_ModHandler.getModItem("GraviSuite", "itemSimpleItem", 1L, 0), true, false, false);
@@ -159,23 +161,6 @@ public class AfterGregTechPostLoadRecipes implements Runnable {
         removeRecipeByOutput(GT_ModHandler.getModItem("GraviSuite", "graviChestPlate", 1L, GT_Values.W), true, false, false);
         removeRecipeByOutput(GT_ModHandler.getModItem("GraviSuite", "kpChestPlate", 1L, GT_Values.W), true, false, false);
 
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockMachineManagerName", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableName", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableBreakerName", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableSignName", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableClusterName", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableClusterName", 1L, 8), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableOutputName", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableInputName", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableRelayName", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableRelayName", 1L, 8), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableBUDName", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableCamouflageName", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableCamouflageName", 1L, 1), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableCamouflageName", 1L, 2), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableIntakeName", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("StevesFactoryManager", "BlockCableIntakeName", 1L, 8), true, false, false);
-
         removeRecipeByOutput(GT_ModHandler.getModItem("LogisticsPipes", "logisticsSolidBlock", 1L, 15), true, false, false);
         removeRecipeByOutput(GT_ModHandler.getModItem("LogisticsPipes", "logisticsSolidBlock", 1L, 0), true, false, false);
         removeRecipeByOutput(GT_ModHandler.getModItem("LogisticsPipes", "logisticsSolidBlock", 1L, 1), true, false, false);
@@ -200,18 +185,12 @@ public class AfterGregTechPostLoadRecipes implements Runnable {
         removeRecipeByOutput(GT_ModHandler.getModItem("EnderIO", "itemPowerItemFilter", 1L, 0), true, false, false);
         removeRecipeByOutput(GT_ModHandler.getModItem("EnderIO", "itemOCConduit", 1L, 0), true, false, false);
 
-        removeRecipeByOutput(GT_ModHandler.getModItem("StorageDrawers", "controller", 1L, 0), true, false, false);
-
         removeRecipeByOutput(GT_ModHandler.getModItem("minecraft", "crafting_table", 1L, 0), true, false, false);
         removeRecipeByOutput(GT_ModHandler.getModItem("minecraft", "chest", 1L, 0), true, false, false);
         removeRecipeByOutput(GT_ModHandler.getModItem("minecraft", "trapped_chest", 1L, 0), true, false, false);
         removeRecipeByOutput(GT_ModHandler.getModItem("minecraft", "dispenser", 1L, 0), true, false, false);
         removeRecipeByOutput(GT_ModHandler.getModItem("minecraft", "dropper", 1L, 0), true, false, false);
         removeRecipeByOutput(GT_ModHandler.getModItem("minecraft", "sticky_piston", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("minecraft", "rail", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("minecraft", "golden_rail", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("minecraft", "detector_rail", 1L, 0), true, false, false);
-        removeRecipeByOutput(GT_ModHandler.getModItem("minecraft", "activator_rail", 1L, 0), true, false, false);
         removeRecipeByOutput(GT_ModHandler.getModItem("minecraft", "noteblock", 1L, 0), true, false, false);
         removeRecipeByOutput(GT_ModHandler.getModItem("minecraft", "jukebox", 1L, 0), true, false, false);
         removeRecipeByOutput(GT_ModHandler.getModItem("minecraft", "trapdoor", 1L, 0), true, false, false);
@@ -832,6 +811,7 @@ public class AfterGregTechPostLoadRecipes implements Runnable {
         removeRecipeByOutput(GT_ModHandler.getModItem("Ztones", "tile.venaBlock", 1L, 0), true, false, false);
 
         removeRecipeByOutput(GT_ModHandler.getModItem("ChickenChunks", "chickenChunkLoader", 1L, 0), true, false, false);
+        removeRecipeByOutput(GT_ModHandler.getModItem("ChickenChunks", "chickenChunkLoader", 1L, 1), true, false, false);
 
         removeRecipeByOutput(GT_ModHandler.getModItem("ProjRed|Fabrication", "projectred.fabrication.icchip", 1L, 0), true, false, false);
         removeRecipeByOutput(GT_ModHandler.getModItem("ProjRed|Fabrication", "projectred.integration.icblock", 1L, 0), true, false, false);

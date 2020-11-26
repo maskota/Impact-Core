@@ -1,5 +1,7 @@
 package com.impact.mods.GregTech.tileentities.multi;
 
+import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_EnergyMulti;
+import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_EnergyTunnel;
 import com.impact.mods.GregTech.blocks.Casing_Helper;
 import com.impact.mods.GregTech.gui.GUI_BASE;
 import com.impact.mods.GregTech.tileentities.multi.debug.GT_MetaTileEntity_MultiParallelBlockBase;
@@ -10,6 +12,7 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 import gregtech.api.objects.GT_RenderedTexture;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
@@ -22,6 +25,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.input.Keyboard;
 
 import static com.impact.loader.ItemRegistery.IGlassBlock;
+import static com.mojang.realmsclient.gui.ChatFormatting.*;
+import static com.mojang.realmsclient.gui.ChatFormatting.YELLOW;
 
 public class GTMTE_Extradifier extends GT_MetaTileEntity_MultiParallelBlockBase {
 
@@ -68,7 +73,7 @@ public class GTMTE_Extradifier extends GT_MetaTileEntity_MultiParallelBlockBase 
                 .addInfo("One-block machine analog")
                 .addParallelInfo(1,256)
                 .addInfo("Parallel Point will upped Upgrade Casing")
-                .addTypeMachine("Fluid Extractor, Fluid Solidifier")
+                .addTypeMachine("Fluid Extractor, Fluid Solidifier, Fluid Heater")
                 .addScrew()
                 .addSeparatedBus()
                 .addSeparator()
@@ -97,7 +102,7 @@ public class GTMTE_Extradifier extends GT_MetaTileEntity_MultiParallelBlockBase 
     /** === RECIPE MAP === */
     @Override
     public GT_Recipe.GT_Recipe_Map getRecipeMap() {
-        return mMode == 0 ?  GT_Recipe.GT_Recipe_Map.sFluidExtractionRecipes : GT_Recipe.GT_Recipe_Map.sFluidSolidficationRecipes;
+        return mMode == 0 ?  GT_Recipe.GT_Recipe_Map.sFluidExtractionRecipes : mMode == 1 ? GT_Recipe.GT_Recipe_Map.sFluidSolidficationRecipes : GT_Recipe.GT_Recipe_Map.sFluidHeaterRecipes;
     }
 
     private int mLevel = 0;
@@ -230,6 +235,8 @@ public class GTMTE_Extradifier extends GT_MetaTileEntity_MultiParallelBlockBase 
             }
         }
 
+        setParallel(this.mLevel);
+
         if(this.mInputBusses.size() > 6) formationChecklist = false;
         if(this.mInputHatches.size() > 6) formationChecklist = false;
         if(this.mOutputBusses.size() > 6) formationChecklist = false;
@@ -239,11 +246,6 @@ public class GTMTE_Extradifier extends GT_MetaTileEntity_MultiParallelBlockBase 
 
 
         return formationChecklist;
-    }
-
-    @Override
-    public int getParallel() {
-        return this.mLevel;
     }
 
     @Override
@@ -263,10 +265,11 @@ public class GTMTE_Extradifier extends GT_MetaTileEntity_MultiParallelBlockBase 
         else
         if (aSide == getBaseMetaTileEntity().getFrontFacing()) {
             mMode++;
-            if (mMode > 1) mMode = 0;
+            if (mMode > 2) mMode = 0;
 
-            mModed = (mMode == 0 ? " Fluid Extractor " : " Fluid Solidifier ");
+            mModed = (mMode == 0 ? " Fluid Extractor " : mMode == 1 ? " Fluid Solidifier " : " Fluid Heater ");
             GT_Utility.sendChatToPlayer(aPlayer, "Now" + EnumChatFormatting.YELLOW + mModed + EnumChatFormatting.RESET + "Mode");
         }
     }
+
 }

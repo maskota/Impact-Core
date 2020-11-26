@@ -1,28 +1,3 @@
-/*
- * Thanks bartimaeusnek for creating parallel recipes
- *
- * Description:
- *
- * Copyright (c) 2018-2019 bartimaeusnek
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package com.impact.mods.GregTech.tileentities.multi.debug;
 
 import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_EnergyMulti;
@@ -39,6 +14,7 @@ import com.impact.util.Vector3ic;
 import gregtech.GT_Mod;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_InputBus;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_MultiBlockBase;
@@ -218,6 +194,10 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends GT_MetaTi
         List<ItemStack> list = new ArrayList<ItemStack>(Arrays.asList(v));
         list.removeAll(Collections.singleton(null));
         return list.toArray(new ItemStack[list.size()]);
+    }
+
+    public static boolean isValidMetaTileEntity(MetaTileEntity aMetaTileEntity) {
+        return aMetaTileEntity.getBaseMetaTileEntity() != null && aMetaTileEntity.getBaseMetaTileEntity().getMetaTileEntity() == aMetaTileEntity && !aMetaTileEntity.getBaseMetaTileEntity().isDead();
     }
 
     @Override
@@ -456,7 +436,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends GT_MetaTi
             stopMachine();
             return false;
         }
-        this.mParallel = getParallel();
+        this.mParallel = getParallelCurrent();
         ArrayList<ItemStack> tInputList = null;
         ArrayList<FluidStack> tFluidList = null;
         ItemStack[] tInputs = null;
@@ -579,7 +559,6 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends GT_MetaTi
                         } else
                             calculateOverclockedNessMulti((int) actualEUT, tRecipe.mDuration, 1, nominalV, this);
 
-
                         if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.mEUt == Integer.MAX_VALUE - 1)
                             return false;
 
@@ -618,12 +597,11 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends GT_MetaTi
     }
 
     public boolean impactRecipe(ItemStack itemStack, int aParallel) {
-
         if (sParallHatchesIn.size() > 0 && getRecipeCheckParallel()) {
             stopMachine();
             return false;
         }
-        this.mParallel = getParallel();
+        this.mParallel = getParallelCurrent();
         ArrayList<ItemStack> tInputList = null;
         ArrayList<FluidStack> tFluidList = null;
         ItemStack[] tInputs = null;
@@ -751,7 +729,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends GT_MetaTi
                         if (this.mEUt > 0) this.mEUt = (-this.mEUt);
 
                         int TimeProgress;
-                        switch (getParallel()) {
+                        switch (mParallel) {
                             default:
                                 TimeProgress = this.mMaxProgresstime;
                                 break;
@@ -820,12 +798,12 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends GT_MetaTi
         mRecipeCheckParallel = isTrue;
     }
 
-    public int getParallel() {
-        return mParallel;
-    }
-
     public void setParallel(int setParallel) {
         mParallel = setParallel;
+    }
+
+    public int getParallelCurrent() {
+        return mParallel;
     }
 
     @Override

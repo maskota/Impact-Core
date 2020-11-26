@@ -1,5 +1,7 @@
 package com.impact.mods.GregTech.tileentities.multi;
 
+import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_EnergyMulti;
+import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_EnergyTunnel;
 import com.impact.mods.GregTech.blocks.Casing_Helper;
 import com.impact.mods.GregTech.gui.GUI_BASE;
 import com.impact.mods.GregTech.tileentities.multi.debug.GT_MetaTileEntity_MultiParallelBlockBase;
@@ -10,6 +12,7 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 import gregtech.api.objects.GT_RenderedTexture;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
@@ -26,6 +29,8 @@ import java.util.ArrayList;
 
 import static com.impact.mods.GregTech.enums.Texture.Icons.*;
 import static com.impact.loader.ItemRegistery.SawMillBlock;
+import static com.mojang.realmsclient.gui.ChatFormatting.*;
+import static com.mojang.realmsclient.gui.ChatFormatting.YELLOW;
 import static gregtech.api.enums.GT_Values.V;
 
 public class GTMTE_SawMill extends GT_MetaTileEntity_MultiParallelBlockBase {
@@ -216,11 +221,6 @@ public class GTMTE_SawMill extends GT_MetaTileEntity_MultiParallelBlockBase {
         mSolderingTool = true;
         mCrowbar = true;
         return formationChecklist;
-    }
-
-    @Override
-    public int getParallel() {
-        return 1;
     }
 
     /**

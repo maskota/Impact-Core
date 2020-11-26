@@ -300,6 +300,13 @@ item.impact_item2.160.name=GDC Ceramic Plate
 item.impact_item2.161.name=LSCF Ceramic Plate
 item.impact_item2.162.name=Tachyon Tube
 item.impact_item2.163.name=Naquadah Chamber Part
+item.impact_item2.164.name=Concrete Tie
+item.impact_item2.165.name=Concrete Railbed
+item.impact_item2.166.name=Extruder Shape (Rail)
+item.impact_item2.167.name=Advanced Metal Mix Ingot
+item.impact_item2.168.name=Electric Metal Mix Ingot
+item.impact_item2.169.name=Reinforced Metal Mix Ingot
+item.impact_item2.170.name=H.S. Metal Mix Ingot
 
 item.impact_WoodBrickFormTool.name=Wooden Brick Form
 
@@ -318,6 +325,7 @@ tile.impact_lapotronicenergyunit_block.2.name=Lapotronic Capacitor (LuV)
 tile.impact_lapotronicenergyunit_block.3.name=Lapotronic Capacitor (ZPM)
 tile.impact_lapotronicenergyunit_block.4.name=Lapotronic Capacitor (UV)
 tile.impact_lapotronicenergyunit_block.5.name=Ultimate Capacitor (UHV)
+tile.impact_lapotronicenergyunit_block.6.name=Energium Capacitor (IV)
 tile.impact_sawmill_block.name=Saw Mill Conveyor
 tile.impact_inside_block.0.name=Naquadah Chamber Casing
 tile.impact_inside_block.1.name=Cyclone Chamber Casing

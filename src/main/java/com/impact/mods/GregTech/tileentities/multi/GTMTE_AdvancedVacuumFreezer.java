@@ -1,5 +1,7 @@
 package com.impact.mods.GregTech.tileentities.multi;
 
+import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_EnergyMulti;
+import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_EnergyTunnel;
 import com.impact.mods.GregTech.blocks.Casing_Helper;
 import com.impact.mods.GregTech.TecTech.TecTechUtils;
 import com.impact.mods.GregTech.gui.GUI_BASE;
@@ -13,6 +15,7 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_InputBus;
 import gregtech.api.objects.GT_RenderedTexture;
 import gregtech.api.util.GT_Recipe;
@@ -31,6 +34,8 @@ import org.lwjgl.input.Keyboard;
 import java.util.ArrayList;
 
 import static com.impact.util.Utilits.getFluidStack;
+import static com.mojang.realmsclient.gui.ChatFormatting.*;
+import static com.mojang.realmsclient.gui.ChatFormatting.YELLOW;
 import static gregtech.api.enums.GT_Values.V;
 import static gregtech.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine.isValidForLowGravity;
 
@@ -337,6 +342,8 @@ public class GTMTE_AdvancedVacuumFreezer extends GT_MetaTileEntity_MultiParallel
             }
         }
 
+        setParallel(this.mLevel);
+
         if (this.mInputBusses.size() > 8) formationChecklist = false;
         if (this.mInputHatches.size() > 1) formationChecklist = false;
         if (this.mOutputBusses.size() > 1) formationChecklist = false;
@@ -351,11 +358,6 @@ public class GTMTE_AdvancedVacuumFreezer extends GT_MetaTileEntity_MultiParallel
      * === SET PARALLEL ===
      */
     public int Parallel() {
-        return this.mLevel;
-    }
-
-    @Override
-    public int getParallel() {
         return this.mLevel;
     }
 

@@ -1,5 +1,7 @@
 package com.impact.mods.GregTech.tileentities.multi;
 
+import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_EnergyMulti;
+import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_EnergyTunnel;
 import com.impact.mods.GregTech.blocks.Casing_Helper;
 import com.impact.mods.GregTech.gui.GUI_BASE;
 import com.impact.mods.GregTech.tileentities.multi.debug.GT_MetaTileEntity_MultiParallelBlockBase;
@@ -10,6 +12,7 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 import gregtech.api.objects.GT_RenderedTexture;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
@@ -22,6 +25,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.input.Keyboard;
 
 import static com.impact.loader.ItemRegistery.IGlassBlock;
+import static com.mojang.realmsclient.gui.ChatFormatting.*;
+import static com.mojang.realmsclient.gui.ChatFormatting.YELLOW;
 
 public class GTMTE_Cutting extends GT_MetaTileEntity_MultiParallelBlockBase {
 
@@ -168,6 +173,8 @@ public class GTMTE_Cutting extends GT_MetaTileEntity_MultiParallelBlockBase {
             }
         }
 
+        setParallel(this.mLevel);
+
         if(this.mInputBusses.size() > 6) formationChecklist = false;
         if(this.mInputHatches.size() > 3) formationChecklist = false;
         if(this.mOutputBusses.size() > 1) formationChecklist = false;
@@ -175,11 +182,6 @@ public class GTMTE_Cutting extends GT_MetaTileEntity_MultiParallelBlockBase {
         if(this.mMaintenanceHatches.size() != 1) formationChecklist = false;
 
         return formationChecklist;
-    }
-
-    @Override
-    public int getParallel() {
-        return this.mLevel;
     }
 
     @Override

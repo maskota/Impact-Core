@@ -8,6 +8,8 @@ import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GT_OreDictUnificator;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 
 public class FormingPressRecipe implements Runnable {
 
@@ -21,9 +23,9 @@ public class FormingPressRecipe implements Runnable {
         //Spatial Chip
         GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(ItemList.Circuit_Parts_Crystal_Chip_Master.get(1L)), GT_ItemList.RedstonePulsatingChipset.get(1L), GT_ItemList.PulsatingSpatialCoreChip.get(1L), 300, 7680);
         //Fluid Chips
-        GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(ItemList.Circuit_Parts_Crystal_Chip_Master.get(1L)), GT_ItemList.RedstoneGoldChipset.get(1L), GT_ItemList.GoldFluidCoreChip.get(1L), 300, 1920);
-        GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(ItemList.Circuit_Parts_Crystal_Chip_Master.get(1L)), GT_ItemList.RedstoneDiamondChipset.get(1L), GT_ItemList.DiamondFluidCoreChip.get(1L), 300, 4096);
-        GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(ItemList.Circuit_Parts_Crystal_Chip_Master.get(1L)), GT_ItemList.RedstoneEmeraldChipset.get(1L), GT_ItemList.EmeraldAdvancedFluidCoreChip.get(1L), 300, 7680);
+        GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(ItemList.Circuit_Parts_Crystal_Chip_Master.get(1L)), GT_ItemList.RedstoneGoldChipset.get(1L), GT_ItemList.GoldFluidCoreChip.get(1L), 300, 1024);
+        GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(ItemList.Circuit_Parts_Crystal_Chip_Master.get(1L)), GT_ItemList.RedstoneDiamondChipset.get(1L), GT_ItemList.DiamondFluidCoreChip.get(1L), 300, 1920);
+        GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(ItemList.Circuit_Parts_Crystal_Chip_Master.get(1L)), GT_ItemList.RedstoneEmeraldChipset.get(1L), GT_ItemList.EmeraldAdvancedFluidCoreChip.get(1L), 300, 4096);
         //Item Chips
         GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(GT_ItemList.EngravedGoldChip.get(1L)), GT_ItemList.RedstoneGoldChipset.get(1L), GT_ItemList.GoldCoreChip.get(1L), 300, 480);
         GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(GT_ItemList.EngravedDiamondCrystalChip.get(1L)), GT_ItemList.RedstoneDiamondChipset.get(1L), GT_ItemList.DiamondCoreChip.get(1L), 300, 1920);
@@ -51,6 +53,11 @@ public class FormingPressRecipe implements Runnable {
         GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Iridium, 2L), GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Iron, 4L), CoreItems2.getRecipe(106, 1), 600, 122880);
         GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Naquadria, 2L), GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Iron, 4L), CoreItems2.getRecipe(107, 1), 600, 500000);
         GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Neutronium, 2L), GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Iron, 4L), CoreItems2.getRecipe(108, 1), 600, 2000000);
+
+        // --- Leather
+        GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(OrePrefixes.foil, Materials.Rubber, 4L), ItemList.Shape_Mold_Plate.get(0), new ItemStack(Items.leather, 1), 800, 16);
+        GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(OrePrefixes.foil, Materials.StyreneButadieneRubber, 4L), ItemList.Shape_Mold_Plate.get(0), new ItemStack(Items.leather, 1), 800, 16);
+        GT_Values.RA.addFormingPressRecipe(GT_OreDictUnificator.get(OrePrefixes.foil, Materials.Silicone, 4L), ItemList.Shape_Mold_Plate.get(0), new ItemStack(Items.leather, 1), 800, 16);
 
         /* ================================= end CORE MOD =================================*/
 

@@ -1,8 +1,10 @@
 package com.impact.mods.GregTech.tileentities.multi;
 
+import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_EnergyMulti;
+import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_EnergyTunnel;
+import com.impact.mods.GregTech.tileentities.multi.debug.GT_MetaTileEntity_MultiParallelBlockBase;
 import com.impact.mods.GregTech.TecTech.TecTechUtils;
 import com.impact.mods.GregTech.gui.GUI_BASE;
-import com.impact.mods.GregTech.tileentities.multi.debug.GT_MetaTileEntity_MultiParallelBlockBase;
 import com.impact.util.MultiBlockTooltipBuilder;
 import com.impact.util.Vector3i;
 import com.impact.util.Vector3ic;
@@ -31,6 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.impact.util.Utilits.isB;
+import static com.mojang.realmsclient.gui.ChatFormatting.*;
+import static com.mojang.realmsclient.gui.ChatFormatting.YELLOW;
 import static gregtech.api.enums.GT_Values.V;
 
 public class GTMTE_AdvancedPyrolyse extends GT_MetaTileEntity_MultiParallelBlockBase {
@@ -129,7 +133,7 @@ public class GTMTE_AdvancedPyrolyse extends GT_MetaTileEntity_MultiParallelBlock
 
     @Override
     public boolean checkRecipe(ItemStack itemStack) {
-        int xPar = tierHatch();
+        int xPar = tierHatch()*2;
 
         ArrayList<ItemStack> tInputList = getStoredInputs();
         ArrayList<FluidStack> tFluidList = this.getStoredFluids();
@@ -212,20 +216,8 @@ public class GTMTE_AdvancedPyrolyse extends GT_MetaTileEntity_MultiParallelBlock
 
                     this.mEfficiency = (10000 - (this.getIdealStatus() - this.getRepairStatus()) * 1000);
                     this.mEfficiencyIncrease = 10000;
-                    long actualEUT = (long) (tRecipe.mEUt) * processed;
 
-                    if (actualEUT > Integer.MAX_VALUE) {
-                        byte divider = 0;
-                        while (actualEUT > Integer.MAX_VALUE) {
-                            actualEUT = actualEUT / 2;
-                            divider++;
-                        }
-                        calculateOverclockedNessMulti((int) (actualEUT / (divider * 2)), tRecipe.mDuration, 1, nominalV, this);
-                    } else
-                        calculateOverclockedNessMulti((int) actualEUT, tRecipe.mDuration, 1, nominalV, this);
-
-
-                    if (this.mEUt == Integer.MAX_VALUE - 1) return false;
+                    this.mEUt = (tRecipe.mEUt) * processed * tierHatch()/2;
 
                     if (this.mEUt > 0) this.mEUt = (-this.mEUt);
 
@@ -252,6 +244,7 @@ public class GTMTE_AdvancedPyrolyse extends GT_MetaTileEntity_MultiParallelBlock
         int Tier = 0;
         for (GT_MetaTileEntity_Hatch_Energy tHatch : mEnergyHatches)
             if (isValidMetaTileEntity(tHatch)) Tier = tHatch.mTier;
+            setParallel(Math.max(Tier, 1));
         return Math.max(Tier, 1);
     }
 
@@ -271,8 +264,7 @@ public class GTMTE_AdvancedPyrolyse extends GT_MetaTileEntity_MultiParallelBlock
                 addOutput(Materials.CarbonDioxide.getGas(216L * mParallelPoint));
                 break;
             case 35 * 20:
-                if (this.mMaxProgresstime == 40 * 20)
-                    addOutput(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.Charcoal, 5 * mParallelPoint));
+                addOutput(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.Charcoal, 5 * mParallelPoint));
                 break;
         }
         return super.onRunningTick(aStack);
@@ -385,11 +377,6 @@ public class GTMTE_AdvancedPyrolyse extends GT_MetaTileEntity_MultiParallelBlock
      */
     @Override
     public int getPollutionPerTick(ItemStack aStack) {
-        return 5 * tierHatch();
-    }
-
-    @Override
-    public int getParallel() {
-        return 1;
+        return 5 * mParallel;
     }
 }
