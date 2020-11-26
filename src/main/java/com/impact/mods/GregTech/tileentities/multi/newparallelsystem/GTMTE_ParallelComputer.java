@@ -149,6 +149,7 @@ public class GTMTE_ParallelComputer extends GT_MetaTileEntity_MultiParallelBlock
                 if (aBaseMetaTileEntity.isActive()) {
                     if (ph.getBaseMetaTileEntity().isAllowedToWork()) {
                         ph.setRecipe(true);
+                        if (!mIsConnect) ph.setRecipe(false);
                     }
                 } else {
                     ph.setRecipe(false);

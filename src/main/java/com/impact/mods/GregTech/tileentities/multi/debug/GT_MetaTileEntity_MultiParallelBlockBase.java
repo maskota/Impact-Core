@@ -436,7 +436,6 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends GT_MetaTi
             stopMachine();
             return false;
         }
-        this.mParallel = getParallelCurrent();
         ArrayList<ItemStack> tInputList = null;
         ArrayList<FluidStack> tFluidList = null;
         ItemStack[] tInputs = null;
@@ -601,7 +600,6 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends GT_MetaTi
             stopMachine();
             return false;
         }
-        this.mParallel = getParallelCurrent();
         ArrayList<ItemStack> tInputList = null;
         ArrayList<FluidStack> tFluidList = null;
         ItemStack[] tInputs = null;
@@ -900,6 +898,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends GT_MetaTi
         aNBT.setInteger("mTargetD", this.mTargetD);
         aNBT.setInteger("mFrequency", this.mFrequency);
         aNBT.setBoolean("mIsReceive", this.mIsConnect);
+        aNBT.setInteger("mParallel", this.mParallel);
     }
 
     @Override
@@ -912,6 +911,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends GT_MetaTi
         this.mTargetD = aNBT.getInteger("mTargetD");
         this.mFrequency = aNBT.getInteger("mFrequency");
         this.mIsConnect = aNBT.getBoolean("mIsReceive");
+        this.mParallel = aNBT.getInteger("mParallel");
     }
 
     public boolean addParallHatchToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
