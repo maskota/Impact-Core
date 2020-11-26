@@ -809,6 +809,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends GT_MetaTi
         final ArrayList<String> ll = new ArrayList<>();
 
         ll.add(mParallel > 1 ? "Parallel Point: " + mParallel : "Parallel not found");
+        ll.add("Dimension Name: " + EnumChatFormatting.YELLOW + getBaseMetaTileEntity().getWorld().provider.getDimensionName());
 
         final String[] a = new String[ll.size()];
         return ll.toArray(a);

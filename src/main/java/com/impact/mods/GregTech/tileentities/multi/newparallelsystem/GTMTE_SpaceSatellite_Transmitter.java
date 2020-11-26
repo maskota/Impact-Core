@@ -121,7 +121,6 @@ public class GTMTE_SpaceSatellite_Transmitter extends GT_MetaTileEntity_Hatch {
     public void onScrewdriverRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
         super.onScrewdriverRightClick(aSide, aPlayer, aX, aY, aZ);
         if (getBaseMetaTileEntity().isServerSide()) {
-            mIsTransmit = !mIsTransmit;
             GT_Utility.sendChatToPlayer(aPlayer, "Check: " + mIsTransmit);
         }
     }
@@ -136,20 +135,12 @@ public class GTMTE_SpaceSatellite_Transmitter extends GT_MetaTileEntity_Hatch {
 
     public void setFrequency(int freq, EntityPlayer aPlayer) {
         Impact_API.sSpaceSatellite.put(freq, new int[]{getBaseMetaTileEntity().getXCoord(), getBaseMetaTileEntity().getYCoord(), getBaseMetaTileEntity().getZCoord(), getBaseMetaTileEntity().getWorld().provider.dimensionId});
-        GT_Utility.sendChatToPlayer(aPlayer, "Frequency: " + freq);
-    }
-
-    @Override
-    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
-        if (aBaseMetaTileEntity.isServerSide()) {
-        }
+        GT_Utility.sendChatToPlayer(aPlayer, "Frequency: " + EnumChatFormatting.YELLOW + freq);
     }
 
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
-//        if (aBaseMetaTileEntity.isServerSide() && aTick % 20 == 0) {
-//        }
     }
 
     public void saveNBTData(NBTTagCompound aNBT) {

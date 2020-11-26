@@ -4,6 +4,7 @@ package com.impact.mods.GregTech;
 import com.impact.mods.GregTech.tileentities.multi.*;
 import com.impact.mods.GregTech.tileentities.multi.generators.*;
 import com.impact.mods.GregTech.tileentities.multi.newparallelsystem.GTMTE_ParallelComputer;
+import com.impact.mods.GregTech.tileentities.multi.newparallelsystem.GTMTE_SpaceSatellite;
 import com.impact.mods.GregTech.tileentities.multi.newparallelsystem.GTMTE_TowerCommunication;
 import com.impact.mods.GregTech.tileentities.storage.GTMTE_LapPowerStation;
 import com.impact.mods.GregTech.tileentities.storage.GTMTE_MultiTank;
@@ -60,7 +61,10 @@ public class Multi_Register {
 
         Parallel_Computer.set(new GTMTE_ParallelComputer(ID++, "impact.multimachine.parallelcomputer", "Parallel Supercomputer").getStackForm(1L));
         Communication_Tower.set(new GTMTE_TowerCommunication(ID++, "impact.multimachine.communicationtower", "Communication Tower").getStackForm(1L));
-        
+        Space_Satellite.set(new GTMTE_SpaceSatellite(ID++, "impact.multimachine.spacesatellite", "Space Satellite").getStackForm(1L));
+
+
+
         Machine_CokeOven.set(new GTMTE_CokeOven(13002, "impact.multimachine.cokeoven", "Coke Oven").getStackForm(1L));
         Machine_Multi_Farm.set(new GTMTE_Farm(13001, "impact.multimachine.farm", "Multiblock Farm").getStackForm(1L));
 

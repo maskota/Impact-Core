@@ -64,7 +64,7 @@ public class GTMTE_TowerCommunication extends GT_MetaTileEntity_MultiblockBase_E
                             ofHatchAdder(GTMTE_TowerCommunication::addClassicToMachineList, CASING_TEXTURE_ID, sCaseCore2, CASING_META),
                             ofBlock(CASING, CASING_META)))
                     .addElement('D', ofHatchAdder(GTMTE_TowerCommunication::addCommunicationHatchToMachineList, CASING_TEXTURE_ID, sCaseCore2, CASING_META))
-                    .addElement('E', ofHintDeferred(GregTech_API.sBlockMachines, -1, () -> new IIcon[]{Textures.BlockIcons.FRAMEBOXGT.getIcon(), Textures.BlockIcons.FRAMEBOXGT.getIcon(), Textures.BlockIcons.FRAMEBOXGT.getIcon(), Textures.BlockIcons.FRAMEBOXGT.getIcon(), Textures.BlockIcons.FRAMEBOXGT.getIcon(), Textures.BlockIcons.FRAMEBOXGT.getIcon(),
+                    .addElement('E', ofHintDeferred(() -> new IIcon[]{Textures.BlockIcons.FRAMEBOXGT.getIcon(), Textures.BlockIcons.FRAMEBOXGT.getIcon(), Textures.BlockIcons.FRAMEBOXGT.getIcon(), Textures.BlockIcons.FRAMEBOXGT.getIcon(), Textures.BlockIcons.FRAMEBOXGT.getIcon(), Textures.BlockIcons.FRAMEBOXGT.getIcon(),
                     }, Materials.Steel.mRGBa))
                     .build();
     public final HashSet<GTMTE_SpaceSatellite_Transmitter> sCommunTransmitter = new HashSet<>();
