@@ -16,11 +16,14 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 
 import java.util.Arrays;
 
 import static com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_DataConnector.EM_D_CONN;
-import static com.impact.mods.GregTech.enums.Texture.Icons.*;
+import static com.impact.mods.GregTech.enums.Texture.Icons.PRL_HATCH_GREEN;
+import static com.impact.mods.GregTech.enums.Texture.Icons.PRL_HATCH_RED;
 import static gregtech.api.enums.Dyes.MACHINE_METAL;
 
 
@@ -158,8 +161,16 @@ public class GTMTE_SpaceSatellite_Receiver extends GT_MetaTileEntity_Hatch {
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
-        if (aBaseMetaTileEntity.isServerSide() && aTick % 20 == 0) { //todo add check dimension ID this.mTargetD
-            tTile = aBaseMetaTileEntity.getTileEntity(this.mTargetX, this.mTargetY, this.mTargetZ);
+        if (aBaseMetaTileEntity.isServerSide() && aTick % 20 == 0) {
+
+            if (this.mTargetD == getBaseMetaTileEntity().getWorld().provider.dimensionId) {
+                tTile = getBaseMetaTileEntity().getTileEntity(this.mTargetX, this.mTargetY, this.mTargetZ);
+            } else {
+                World tWorld = DimensionManager.getWorld(this.mTargetD);
+                if (tWorld != null) {
+                    tTile = tWorld.getTileEntity(this.mTargetX, this.mTargetY, this.mTargetZ);
+                }
+            }
             if (tTile != null && tTile instanceof IGregTechTileEntity) {
                 IMetaTileEntity aTransmitter = ((IGregTechTileEntity) tTile).getMetaTileEntity();
                 if (aTransmitter instanceof GTMTE_SpaceSatellite_Transmitter) {
