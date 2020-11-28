@@ -16,6 +16,10 @@ public class Texture {
 
         PRL_HATCH_RED, PRL_HATCH_YELLOW, PRL_HATCH_GREEN,
 
+        OVERLAY_RACK, OVERLAY_RACK_ACTIVE,
+        OVERLAY_RACK1, OVERLAY_RACK2, OVERLAY_RACK3, OVERLAY_RACK4, OVERLAY_RACK5, OVERLAY_RACK6, OVERLAY_RACK7, OVERLAY_RACK8,
+        OVERLAY_RACK9, OVERLAY_RACK10, OVERLAY_RACK11, OVERLAY_RACK12, OVERLAY_RACK13, OVERLAY_RACK14, OVERLAY_RACK15,
+
         /*BLOCK ICONS*/
         CASING_PARALLEL1, CASING_PARALLEL2, CASING_PARALLEL3, CASING_PARALLEL4, CASING_PBE, CASING_LASER, CASING_ASSEMBLER, CASING_MIXER,
         CASING_CENTRIFUGE, CASING_ELECTROLYZER, CASING_WIRE, CASING_SUPPLY, CASING_UTILITY, CASING_BREWMENTER, CASING_ARC, CASING_CUTTER,
@@ -29,28 +33,47 @@ public class Texture {
         VOID;
 
         public static final IIconContainer[]
-                CONNECTED_FUSHULLS = new IIconContainer[]{
-                CASING_HYPER_SIDE1,
-                CASING_HYPER_SIDE2,
-                CASING_HYPER_SIDE1,
-                CASING_HYPER_SIDE1,
-                CASING_HYPER_SIDE1,
-                CASING_HYPER_SIDE1,
-                CASING_HYPER_SIDE1,
-                CASING_HYPER_SIDE1,
-                CASING_HYPER_SIDE1,
-                CASING_HYPER_SIDE1,
-                CASING_HYPER_SIDE1,
-                CASING_HYPER_SIDE1
-        },
-                Test = new IIconContainer[]{
+                CONNECTED_FUSHULLS =
+                new IIconContainer[]{
+                        CASING_HYPER_SIDE1,
+                        CASING_HYPER_SIDE2,
+                        CASING_HYPER_SIDE1,
+                        CASING_HYPER_SIDE1,
+                        CASING_HYPER_SIDE1,
+                        CASING_HYPER_SIDE1,
+                        CASING_HYPER_SIDE1,
+                        CASING_HYPER_SIDE1,
+                        CASING_HYPER_SIDE1,
+                        CASING_HYPER_SIDE1,
+                        CASING_HYPER_SIDE1,
+                        CASING_HYPER_SIDE1
+                },
+                RACK_OVERLAY = new IIconContainer[]{
+                        OVERLAY_RACK,
+                        OVERLAY_RACK1,
+                        OVERLAY_RACK2,
+                        OVERLAY_RACK3,
+                        OVERLAY_RACK4,
+                        OVERLAY_RACK5,
+                        OVERLAY_RACK6,
+                        OVERLAY_RACK7,
+                        OVERLAY_RACK8,
+                        OVERLAY_RACK9,
+                        OVERLAY_RACK10,
+                        OVERLAY_RACK11,
+                        OVERLAY_RACK12,
+                        OVERLAY_RACK13,
+                        OVERLAY_RACK14,
+                        OVERLAY_RACK_ACTIVE
+                },
+                test = new IIconContainer[]{
 
-        };
+                };
 
 
         protected IIcon mIcon;
 
-        private Icons() {
+        Icons() {
             GregTech_API.sGTBlockIconload.add(this);
         }
 
