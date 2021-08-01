@@ -107,6 +107,8 @@ public enum GT_ItemList implements IItemContainer {
 
   filler,
 
+  test,
+
   end;
   private ItemStack mStack;
   private boolean mHasNotBeenSet = true;

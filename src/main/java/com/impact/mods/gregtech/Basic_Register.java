@@ -13,6 +13,7 @@ import com.impact.mods.gregtech.tileentities.multi.parallelsystem.GTMTE_Parallel
 import com.impact.mods.gregtech.tileentities.multi.parallelsystem.GTMTE_SpaceSatellite_Receiver;
 import com.impact.mods.gregtech.tileentities.multi.parallelsystem.GTMTE_SpaceSatellite_Transmitter;
 import com.impact.mods.gregtech.tileentities.multi.storage.hatch.GTMTE_TankHatch;
+import com.impact.mods.railcraft.carts.machines.GT_RC_Loader_Item;
 import gregtech.GT_Mod;
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.Materials;
@@ -242,6 +243,9 @@ public class Basic_Register {
   
     Regulate_One_Stack_Chest.set(new GTMTE_OneStackRegulateChest(ID2++, "impact.machine.onestackregulatechest",
             "One Stack Regulate Chest", 1).getStackForm(1L));
+
+    test.set(new GT_RC_Loader_Item(ID2++, "impact.machine.itemloaderrail",
+            "Item Loader", 1).getStackForm(1L));
 
 
     INFO("Last ID Basic_Register.java: " + ID2);//14587
