@@ -143,11 +143,14 @@ public class Multi_Register {
     Machine_ElectricImplosion.set(
         new GTMTE_ElectricImplosionCompressor(ID++, "impact.multis.electricimplosion",
             "Electric Implosion Compressor").getStackForm(1L));
-  
+
+    //TODO: 05.08.2021
     ABS.set( new GTMTE_Aerostat(ID++, "impact.multis.aerostat", "Aerostat").getStackForm(1L));
   
     filler.set( new GTMTE_Filler(ID++, "impact.multis.filler", "Filler").getStackForm(1L));
-    
+
+    Space_Port.set( new GTMTE_Spaceport(ID++, "impact.multis.spaceport", "Space Port").getStackForm(1L));
+
 
     System.out.println("Multi_Register.java | Last ID: " + ID);
 

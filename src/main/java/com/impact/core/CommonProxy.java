@@ -1,5 +1,6 @@
 package com.impact.core;
 
+import com.impact.World_Interaction;
 import com.impact.client.render.BlockHint;
 import com.impact.command.Command_FixBQ;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -65,6 +66,7 @@ public class CommonProxy implements IGuiHandler {
     Impact_API.sElevatorSpace.clear();
     Impact_API.sCommunicationTower.clear();
     Impact_API.sAerostat.clear();
+    World_Interaction.worldInteractionChecker(World_Interaction.ALL);
   }
 
   public void onServerStopping() {

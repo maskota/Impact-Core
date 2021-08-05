@@ -13,6 +13,7 @@ import com.impact.mods.gregtech.tileentities.multi.parallelsystem.GTMTE_SpaceSat
 import com.impact.mods.gregtech.tileentities.multi.parallelsystem.GTMTE_TowerCommunication;
 import com.impact.mods.gregtech.tileentities.multi.storage.GTMTE_LapPowerStation;
 import com.impact.mods.gregtech.tileentities.multi.units.GTMTE_Aerostat;
+import com.impact.mods.gregtech.tileentities.multi.units.GTMTE_Spaceport;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.BaseTileEntity;
@@ -92,9 +93,13 @@ public class ImpactPlugin extends PluginBase {
 		
 		final GTMTE_Aerostat aerostat = tMeta instanceof GTMTE_Aerostat
 				? ((GTMTE_Aerostat) tMeta) : null;
+
+		final GTMTE_Spaceport spaceport = tMeta instanceof GTMTE_Spaceport
+				? ((GTMTE_Spaceport) tMeta) : null;
 		
 		final GTMTE_LongDistancePipelineBase pipeline = tMeta instanceof GTMTE_LongDistancePipelineBase
 				? ((GTMTE_LongDistancePipelineBase) tMeta) : null;
+
 		
 		if (tMeta != null) {
 			
@@ -112,6 +117,11 @@ public class ImpactPlugin extends PluginBase {
 			if (aerostat != null) {
 				if (!tag.getString("aerostatName").isEmpty())
 					currenttip.add(trans("waila.aerostat.namestation") + ": " + EnumChatFormatting.GOLD + tag.getString("aerostatName"));
+			}
+
+			if (spaceport != null) {
+				if (!tag.getString("spaceportName").isEmpty())
+					currenttip.add(trans("waila.aerostat.namestation") + ": " + EnumChatFormatting.GOLD + tag.getString("spaceportName"));
 			}
 			
 			if (reactorHatch != null) {
@@ -257,11 +267,18 @@ public class ImpactPlugin extends PluginBase {
 		
 		final GTMTE_Aerostat aerostat = tMeta instanceof GTMTE_Aerostat
 				? ((GTMTE_Aerostat) tMeta) : null;
+
+		final GTMTE_Spaceport spaceport = tMeta instanceof GTMTE_Spaceport
+				? ((GTMTE_Spaceport) tMeta) : null;
 		
 		if (tMeta != null) {
 			
 			if (aerostat != null) {
 				tag.setString("aerostatName", aerostat.aerName);
+			}
+
+			if (spaceport != null) {
+				tag.setString("spaceportName", spaceport.nameHash);
 			}
 			
 			if (reactorHatch != null) {

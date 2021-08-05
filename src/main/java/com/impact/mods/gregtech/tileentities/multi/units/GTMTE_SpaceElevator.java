@@ -233,8 +233,7 @@ public class GTMTE_SpaceElevator extends GT_MetaTileEntity_MultiParallelBlockBas
 				if (tEntity.riddenByEntity != null) {
 					tEntity.riddenByEntity.mountEntity(null);
 				}
-				if (iAm.getRedstone() && (checkCurrentDimension(mTargetD) || (!isDimensionalTeleportAvailable()) ||
-						(!GT_Utility.moveEntityToDimensionAtCoords(tEntity, mTargetD, mTargetX + 0.5D, mTargetY + 1.5D, mTargetZ + 0.5D)))) {
+				if (iAm.getRedstone() && (checkCurrentDimension(mTargetD) || (!isDimensionalTeleportAvailable()) || (!GT_Utility.moveEntityToDimensionAtCoords(tEntity, mTargetD, mTargetX + 0.5D, mTargetY + 1.5D, mTargetZ + 0.5D)))) {
 					if ((tEntity instanceof EntityLivingBase)) {
 						((EntityLivingBase) tEntity).setPositionAndUpdate(mTargetX + 0.5D, mTargetY + 1.5D, mTargetZ + 0.5D);
 					} else {
