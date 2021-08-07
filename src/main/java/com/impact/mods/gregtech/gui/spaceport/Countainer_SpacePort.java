@@ -59,7 +59,7 @@ public class Countainer_SpacePort extends GT_ContainerMetaTile_Machine {
 							}
 							return null;
 						} else if (aSlotIndex == 2) {
-							spaceport.teleportEntity(mTileEntity);
+							spaceport.teleportEntity(aPlayer);
 						}
 					}
 			}

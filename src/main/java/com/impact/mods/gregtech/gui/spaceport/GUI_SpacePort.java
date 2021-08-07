@@ -1,22 +1,15 @@
 package com.impact.mods.gregtech.gui.spaceport;
 
 import com.impact.World_Interaction;
-import com.impact.core.Impact_API;
 import com.impact.mods.gregtech.gui.GT_GUIContainerMT_Machine;
-import com.impact.mods.gregtech.gui.aerostat.Countainer_SelectAerostat;
 import com.impact.mods.gregtech.tileentities.multi.units.GTMTE_Spaceport;
-import com.impact.util.PositionObject;
-import com.impact.util.Utilits;
 import com.impact.util.string.IGTE_NameHash;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import li.cil.repack.org.luaj.vm2.ast.Str;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.EnumChatFormatting;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static gregtech.api.enums.GT_Values.RES_PATH_GUI;
 
@@ -26,12 +19,20 @@ public class GUI_SpacePort extends GT_GUIContainerMT_Machine {
 	public String mStationName = "";
 	public String playerName = "";
 	public List<GTMTE_Spaceport> spacePorts = new LinkedList<>();
+	public Map<GTMTE_Spaceport, String> spacePortsName = new LinkedHashMap<>();
 
 	public void checkOnlyOwnerSpacePorts() {
 		spacePorts.clear();
-		for (GTMTE_Spaceport port : World_Interaction.World_SpacePort) {
-			if (!port.nameHash.equals(new IGTE_NameHash(mContainer.mTileEntity).getNameHash())) spacePorts.add(port);
+		spacePorts.addAll(World_Interaction.World_SpacePort);
+		for (GTMTE_Spaceport a : spacePorts) {
+			spacePortsName.put(a, a.getDimensionName() + "#");
 		}
+	}
+
+	@Override
+	public void initGui() {
+		super.initGui();
+		checkOnlyOwnerSpacePorts();
 	}
 
 	public GUI_SpacePort(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, String aName) {
@@ -44,8 +45,8 @@ public class GUI_SpacePort extends GT_GUIContainerMT_Machine {
 		int idd = 1;
 		for (GTMTE_Spaceport spaceport : spacePorts) {
 			if (idd == id) {
-				if (spaceport.nameHash.equals(new IGTE_NameHash(mContainer.mTileEntity).getNameHash())) return "THIS " + spaceport.nameHash;
-				return idd + ". " + spaceport.nameHash;
+				String tDim = spaceport.getDimensionName() + "#" + spaceport.hash;
+				return idd + ". " + tDim + (spaceport.nameHash.equals(new IGTE_NameHash(mContainer.mTileEntity).getNameHash()) ? " (this)" : "");
 			}
 			idd++;
 		}
@@ -70,7 +71,6 @@ public class GUI_SpacePort extends GT_GUIContainerMT_Machine {
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		//this.fontRendererObj.drawString(mName, 33, 8, 16448255);
 		Countainer_SpacePort container = (Countainer_SpacePort) this.mContainer;
-		checkOnlyOwnerSpacePorts();
 		this.fontRendererObj.drawString(mName, 33, 8, 16448255);
 		//this.fontRendererObj.drawString("Owner: " + EnumChatFormatting.GREEN + playerName, 33, 18, 16448255);
 		

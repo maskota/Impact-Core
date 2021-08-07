@@ -1,5 +1,6 @@
 package com.impact.util;
 
+import com.impact.util.vector.TeleportPoint;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -87,7 +88,25 @@ public class PositionObject {
 	public PositionObject copy() {
 		return new PositionObject(this);
 	}
-	
+
+	public static TeleportPoint toTeleportPoint(PositionObject p) {
+		TeleportPoint tp = new TeleportPoint();
+		tp.dimID = p.dPos;
+		tp.x = p.xPos;
+		tp.y = p.yPos;
+		tp.z = p.zPos;
+		return tp;
+	}
+
+	public TeleportPoint toTeleportPoint() {
+		TeleportPoint tp = new TeleportPoint();
+		tp.dimID = this.dPos;
+		tp.x = this.xPos;
+		tp.y = this.yPos;
+		tp.z = this.zPos;
+		return tp;
+	}
+
 	/**
 	 * @param obj1 - PositionObject source
 	 * @param obj2 - PositionObject target

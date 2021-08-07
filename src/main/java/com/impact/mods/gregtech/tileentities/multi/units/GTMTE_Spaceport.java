@@ -9,6 +9,10 @@ import com.impact.mods.gregtech.tileentities.multi.implement.GT_MetaTileEntity_M
 import com.impact.util.PositionObject;
 import com.impact.util.Utilits;
 import com.impact.util.string.IGTE_NameHash;
+import com.impact.util.vector.TeleportPoint;
+import com.impact.util.vector.Teleportation_World;
+import gravisuite.Helpers;
+import gravisuite.ServerProxy;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -23,10 +27,9 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase {
 
@@ -38,6 +41,8 @@ public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase {
     public static ArrayList<String> owners = new ArrayList<>();
 
     public String nameHash = "";
+    public String hash = "0000";
+    public Random r = new Random();
 
     Block CASING = Casing_Helper.sCaseCore2;
     byte CASING_META = 14;
@@ -106,6 +111,7 @@ public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase {
         super.saveNBTData(aNBT);
         aNBT.setInteger("aerID", aerID);
         aNBT.setInteger("curID", curID);
+        aNBT.setString("hash", hash);
     }
 
     @Override
@@ -113,6 +119,7 @@ public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase {
         super.loadNBTData(aNBT);
         curID = aNBT.getInteger("curID");
         aerID = aNBT.getInteger("aerID");
+        hash = aNBT.getString("hash");
     }
 
     @Override
@@ -129,11 +136,7 @@ public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase {
     public void onPostTick(IGregTechTileEntity iAm, long aTick) {
         super.onPostTick(iAm, aTick);
         if (iAm.isServerSide()) {
-            if (iAm.getRedstone())  {
-                if (!PositionObject.checkComparePosition(targetSpacePort, new PositionObject(iAm))) {
-                    teleportEntity(iAm);
-                } else Utilits.sendChatByTE(iAm, "на тот же незя");
-            }
+
         }
         // TODO: 05.08.2021 Получить при старте мира загруженые машины и
         //  сделать им статические ID чтобы можно было найти из списка
@@ -163,62 +166,42 @@ public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase {
         nameHash = new IGTE_NameHash(iAm).getNameHash();
         World_Interaction.worldInteractionChecker(World_Interaction.SPACEPORT);
         checkOnlyOwnerSpacePorts();
+        hash = String.format("%04d", r.nextInt(10001));
+    }
+
+    public String getDimensionName() {
+        return getBaseMetaTileEntity().getWorld().provider.getDimensionName();
     }
 
     public void checkOnlyOwnerSpacePorts() {
         spacePortWorldOwner.clear();
-        for (GTMTE_Spaceport port : World_Interaction.World_SpacePort) {
-            if (!port.nameHash.equals(nameHash)) spacePortWorldOwner.add(port);
-        }
+        spacePortWorldOwner.addAll(World_Interaction.World_SpacePort);
     }
 
-    public boolean checkCurrentDimension(int dim) {
-        return dim == getBaseMetaTileEntity().getWorld().provider.dimensionId;
+    public String getOwner() {
+        return getBaseMetaTileEntity().getOwnerName();
     }
 
-    public boolean isDimensionalTeleportAvailable() {
-        return GT_Utility.isRealDimension(this.mTargetD) && GT_Utility.isRealDimension(getBaseMetaTileEntity().getWorld().provider.dimensionId);
-    }
+    public void mapOfOwners() {
+        LinkedHashMap<String, ArrayList<GTMTE_Spaceport>> tOwners = new LinkedHashMap<>();
 
-    public void teleportEntity(IGregTechTileEntity iAm) {
-
-        GTMTE_Spaceport destPort =  spacePortWorldOwner.get(aerID - 1);
-        if (destPort != null) {
-
-            int a = World_Interaction.World_SpacePort.indexOf(destPort);
-            int b = World_Interaction.World_SpacePort.indexOf(this);
-
-            Utilits.sendChatByTE(iAm, "destPort: " + a + " this:  " + b);
-
-            PositionObject destPortPos = new PositionObject(destPort.getBaseMetaTileEntity());
-
-            List entities_in_box = iAm.getWorld().getEntitiesWithinAABB(Entity.class, Utilits.setBoxAABB(iAm, 1.5));
-            for (Object tObject : entities_in_box) {
-                if (((tObject instanceof Entity)) && (!((Entity) tObject).isDead)) {
-                    Entity tEntity = (Entity) tObject;
-//                    if (tEntity instanceof EntityPlayer) {
-//                        EntityPlayer player = (EntityPlayer) tEntity;
-//                        player.setPositionAndUpdate(destPortPos.xPos + 0.5D, destPortPos.yPos + 1, destPortPos.zPos + 0.5D);
-//                    }
-
-                    if (tEntity.ridingEntity != null) {
-                        tEntity.mountEntity(null);
-                    }
-                    if (tEntity.riddenByEntity != null) {
-                        tEntity.riddenByEntity.mountEntity(null);
-                    }
-                    if ((checkCurrentDimension(destPortPos.dPos) || (!isDimensionalTeleportAvailable()) ||
-                            (!GT_Utility.moveEntityToDimensionAtCoords(tEntity, destPortPos.dPos, destPortPos.xPos + 0.5D, destPortPos.yPos + 1.5D, destPortPos.zPos + 0.5D)))) {
-                        if ((tEntity instanceof EntityLivingBase)) {
-                            ((EntityLivingBase) tEntity).setPositionAndUpdate(destPortPos.xPos + 0.5D, destPortPos.yPos + 1.5D, destPortPos.zPos + 0.5D);
-                        } else {
-                            tEntity.setPosition(destPortPos.xPos + 0.5D, destPortPos.yPos + 1.5D, destPortPos.zPos + 0.5D);
-                        }
-                    }
+        for (GTMTE_Spaceport a : World_Interaction.World_SpacePort) {
+            boolean tru = false;
+            for (String owner : owners) {
+                if (a.getOwner().equals(owner)) {
+                    tru = true;
                 }
             }
+            if (tru) spacePortWorldOwner.add(a);
         }
     }
 
-
+    public void teleportEntity(Entity entity) {
+        TeleportPoint point = PositionObject.toTeleportPoint(
+                new PositionObject(spacePortWorldOwner.get(aerID-1).getBaseMetaTileEntity()));
+        PositionObject tPos = new PositionObject(getBaseMetaTileEntity());
+        if (tPos.dPos != point.dimID) {
+            Teleportation_World.teleportEntity(entity, point);
+        }
+    }
 }
