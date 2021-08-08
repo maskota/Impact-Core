@@ -28,6 +28,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.*;
 
@@ -167,6 +168,8 @@ public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase {
         World_Interaction.worldInteractionChecker(World_Interaction.SPACEPORT);
         checkOnlyOwnerSpacePorts();
         hash = String.format("%04d", r.nextInt(10001));
+        // TODO: 08.08.2021 Список игроков -> список машин
+       // todo ImmutablePair<UUID, String> as = new ImmutablePair<>(new UUID(1, 2), "23");
     }
 
     public String getDimensionName() {
