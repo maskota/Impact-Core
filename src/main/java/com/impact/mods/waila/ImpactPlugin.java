@@ -11,6 +11,7 @@ import com.impact.mods.gregtech.tileentities.multi.parallelsystem.GTMTE_Parallel
 import com.impact.mods.gregtech.tileentities.multi.parallelsystem.GTMTE_ParallelHatch_Output;
 import com.impact.mods.gregtech.tileentities.multi.parallelsystem.GTMTE_SpaceSatellite_Receiver;
 import com.impact.mods.gregtech.tileentities.multi.parallelsystem.GTMTE_TowerCommunication;
+import com.impact.mods.gregtech.tileentities.multi.photonsystem.GTMTE_PhotonStabilizer;
 import com.impact.mods.gregtech.tileentities.multi.storage.GTMTE_LapPowerStation;
 import com.impact.mods.gregtech.tileentities.multi.units.GTMTE_Aerostat;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -92,6 +93,9 @@ public class ImpactPlugin extends PluginBase {
 		
 		final GTMTE_Aerostat aerostat = tMeta instanceof GTMTE_Aerostat
 				? ((GTMTE_Aerostat) tMeta) : null;
+
+		final GTMTE_PhotonStabilizer photonStabilizer = tMeta instanceof GTMTE_PhotonStabilizer
+				? ((GTMTE_PhotonStabilizer) tMeta) : null;
 		
 		final GTMTE_LongDistancePipelineBase pipeline = tMeta instanceof GTMTE_LongDistancePipelineBase
 				? ((GTMTE_LongDistancePipelineBase) tMeta) : null;
@@ -107,6 +111,10 @@ public class ImpactPlugin extends PluginBase {
 				} else {
 					currenttip.add(trans("waila.pipeline.side"));
 				}
+			}
+
+			if (photonStabilizer != null) {
+				currenttip.add(tag.getInteger("photonsSummary") + "");
 			}
 			
 			if (aerostat != null) {
@@ -257,8 +265,15 @@ public class ImpactPlugin extends PluginBase {
 		
 		final GTMTE_Aerostat aerostat = tMeta instanceof GTMTE_Aerostat
 				? ((GTMTE_Aerostat) tMeta) : null;
+
+		final GTMTE_PhotonStabilizer photonStabilizer = tMeta instanceof GTMTE_PhotonStabilizer
+				? ((GTMTE_PhotonStabilizer) tMeta) : null;
 		
 		if (tMeta != null) {
+
+			if (photonStabilizer != null) {
+				tag.setInteger("photonsSummary", photonStabilizer.mPhotonsSummary);
+			}
 			
 			if (aerostat != null) {
 				tag.setString("aerostatName", aerostat.aerName);
