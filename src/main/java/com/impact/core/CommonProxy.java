@@ -1,8 +1,10 @@
 package com.impact.core;
 
+import com.impact.client.render.fx.FXLightningBolt;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -64,6 +66,12 @@ public class CommonProxy implements IGuiHandler {
 
     public Object beamCont(World worldObj, EntityPlayer p, double tx, double ty, double tz, int type, int color, boolean reverse, float endmod, Object input, int impact) {
         return null;
+    }
+
+    public void nodeBolt(World worldObj, float x, float y, float z, Entity targetedEntity) {
+    }
+
+    public void nodeBolt(World world, int tX, int tY, int tZ, int tXN, int tYN, int tZN) {
     }
 
     public void onServerStarted() {
