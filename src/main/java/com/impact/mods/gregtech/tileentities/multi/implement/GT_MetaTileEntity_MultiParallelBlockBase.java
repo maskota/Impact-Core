@@ -2,7 +2,6 @@ package com.impact.mods.gregtech.tileentities.multi.implement;
 
 import static com.impact.core.Refstrings.MODID;
 import static gregtech.api.enums.GT_Values.V;
-import static gregtech.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine.isValidForLowGravity;
 
 import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_DynamoMulti;
 import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_DynamoTunnel;
@@ -25,7 +24,6 @@ import com.impact.util.multis.OverclockCalculate;
 import com.impact.util.multis.WorldProperties;
 import com.impact.util.vector.Vector3i;
 import com.impact.util.vector.Vector3ic;
-import gregtech.GT_Mod;
 import gregtech.api.enums.GT_Values;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -38,14 +36,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import javax.annotation.Nonnegative;
 
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.ArrayUtils;
@@ -81,7 +77,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
   }
   
   public static ItemStack[] clean(final ItemStack[] v) {
-    List<ItemStack> list = new ArrayList<ItemStack>(Arrays.asList(v));
+    List<ItemStack> list = new ArrayList<>(Arrays.asList(v));
     list.removeAll(Collections.singleton(null));
     return list.toArray(new ItemStack[list.size()]);
   }
@@ -221,7 +217,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
     
     for (GTMTE_BusHatch_Input tBus : mInputBusHatches) {
       if (modeBuses == 0) {
-        ArrayList<ItemStack> tBusItems = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> tBusItems = new ArrayList<>();
         tBus.mRecipeMap = getRecipeMap();
         if (isValidMetaTileEntity(tBus)) {
           for (int i = tBus.getBaseMetaTileEntity().getSizeInventory() - 1; i >= 0; i--) {
@@ -256,13 +252,13 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
             return false;
           }
         
-          ArrayList<ItemStack> outputItems = new ArrayList<ItemStack>();
-          ArrayList<FluidStack> outputFluids = new ArrayList<FluidStack>();
+          ArrayList<ItemStack> outputItems = new ArrayList<>();
+          ArrayList<FluidStack> outputFluids = new ArrayList<>();
           boolean found_Recipe = false;
           int processed = 0;
           while ((this.getStoredFluids().size() | this.getStoredInputs().size()) > 0
                   && processed < 1) {
-            if ((tRecipe.mEUt * (processed + 1)) < nominalV && tRecipe
+            if ((tRecipe.mEUt * (processed + 1L)) < nominalV && tRecipe
                     .isRecipeInputEqual(true, tFluids, tInputs)) {
               found_Recipe = true;
               for (int i = 0; i < tRecipe.mOutputs.length; i++) {
@@ -303,7 +299,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
   
     for (GT_MetaTileEntity_Hatch_InputBus tBus : mInputBusses) {
       if (modeBuses == 0) {
-        ArrayList<ItemStack> tBusItems = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> tBusItems = new ArrayList<>();
         tBus.mRecipeMap = getRecipeMap();
         if (isValidMetaTileEntity(tBus)) {
           for (int i = tBus.getBaseMetaTileEntity().getSizeInventory() - 1; i >= 0; i--) {
@@ -338,8 +334,8 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
             return false;
           }
         
-          ArrayList<ItemStack> outputItems = new ArrayList<ItemStack>();
-          ArrayList<FluidStack> outputFluids = new ArrayList<FluidStack>();
+          ArrayList<ItemStack> outputItems = new ArrayList<>();
+          ArrayList<FluidStack> outputFluids = new ArrayList<>();
           boolean found_Recipe = false;
           int processed = 0;
           while ((this.getStoredFluids().size() | this.getStoredInputs().size()) > 0
@@ -397,7 +393,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
   
     for (GTMTE_BusHatch_Input tBus : mInputBusHatches) {
       if (modeBuses == 0) {
-        ArrayList<ItemStack> tBusItems = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> tBusItems = new ArrayList<>();
         tBus.mRecipeMap = getRecipeMap();
         if (isValidMetaTileEntity(tBus)) {
           for (int i = tBus.getBaseMetaTileEntity().getSizeInventory() - 1; i >= 0; i--) {
@@ -435,15 +431,15 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
             return false;
           }
         
-          ArrayList<ItemStack> outputItems = new ArrayList<ItemStack>();
-          ArrayList<FluidStack> outputFluids = new ArrayList<FluidStack>();
+          ArrayList<ItemStack> outputItems = new ArrayList<>();
+          ArrayList<FluidStack> outputFluids = new ArrayList<>();
         
           boolean found_Recipe = false;
         
           ItemStack[] tOut = new ItemStack[tRecipe.mOutputs.length];
         
           while ((tFluidList.size() > 0 || tInputList.size() > 0) && mCheckParallelCurrent < mParallel) {
-            if ((tRecipe.mEUt * (mCheckParallelCurrent + 1)) < nominalV && tRecipe
+            if ((tRecipe.mEUt * (mCheckParallelCurrent + 1L)) < nominalV && tRecipe
                     .isRecipeInputEqual(true, tFluids, tInputs)) {
               found_Recipe = true;
               for (int h = 0; h < tRecipe.mOutputs.length; h++) {
@@ -479,8 +475,8 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
         
           tOut = clean(tOut);
         
-          List<ItemStack> overStacks = new ArrayList<ItemStack>();
-        
+          List<ItemStack> overStacks = new ArrayList<>();
+
           for (int f = 0; f < tOut.length; f++) {
             while (tOut[f].getMaxStackSize() < tOut[f].stackSize) {
               if (tOut[f] != null) {
@@ -498,7 +494,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
             tOut = ArrayUtils.addAll(tOut, tmp);
           }
         
-          List<ItemStack> tSList = new ArrayList<ItemStack>();
+          List<ItemStack> tSList = new ArrayList<>();
         
           for (ItemStack tS : tOut) {
             if (tS.stackSize > 0) {
@@ -570,7 +566,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
     
     for (GT_MetaTileEntity_Hatch_InputBus tBus : mInputBusses) {
       if (modeBuses == 0) {
-        ArrayList<ItemStack> tBusItems = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> tBusItems = new ArrayList<>();
         tBus.mRecipeMap = getRecipeMap();
         if (isValidMetaTileEntity(tBus)) {
           for (int i = tBus.getBaseMetaTileEntity().getSizeInventory() - 1; i >= 0; i--) {
@@ -608,15 +604,15 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
             return false;
           }
 
-          ArrayList<ItemStack> outputItems = new ArrayList<ItemStack>();
-          ArrayList<FluidStack> outputFluids = new ArrayList<FluidStack>();
+          ArrayList<ItemStack> outputItems = new ArrayList<>();
+          ArrayList<FluidStack> outputFluids = new ArrayList<>();
 
           boolean found_Recipe = false;
 
           ItemStack[] tOut = new ItemStack[tRecipe.mOutputs.length];
 
           while ((tFluidList.size() > 0 || tInputList.size() > 0) && mCheckParallelCurrent < mParallel) {
-            if ((tRecipe.mEUt * (mCheckParallelCurrent + 1)) < nominalV && tRecipe
+            if ((tRecipe.mEUt * (mCheckParallelCurrent + 1L)) < nominalV && tRecipe
                 .isRecipeInputEqual(true, tFluids, tInputs)) {
               found_Recipe = true;
               for (int h = 0; h < tRecipe.mOutputs.length; h++) {
@@ -652,7 +648,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
 
           tOut = clean(tOut);
 
-          List<ItemStack> overStacks = new ArrayList<ItemStack>();
+          List<ItemStack> overStacks = new ArrayList<>();
 
           for (int f = 0; f < tOut.length; f++) {
             while (tOut[f].getMaxStackSize() < tOut[f].stackSize) {
@@ -671,7 +667,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
             tOut = ArrayUtils.addAll(tOut, tmp);
           }
 
-          List<ItemStack> tSList = new ArrayList<ItemStack>();
+          List<ItemStack> tSList = new ArrayList<>();
 
           for (ItemStack tS : tOut) {
             if (tS.stackSize > 0) {
@@ -755,7 +751,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
   
     for (GTMTE_BusHatch_Input tBus : mInputBusHatches) {
       if (modeBuses == 0) {
-        ArrayList<ItemStack> tBusItems = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> tBusItems = new ArrayList<>();
         tBus.mRecipeMap = getRecipeMap();
         if (isValidMetaTileEntity(tBus)) {
           for (int i = tBus.getBaseMetaTileEntity().getSizeInventory() - 1; i >= 0; i--) {
@@ -786,12 +782,12 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
           if (!WorldProperties.needSpace(tRecipe, this)) {
             return false;
           }
-          ArrayList<ItemStack> outputItems = new ArrayList<ItemStack>();
-          ArrayList<FluidStack> outputFluids = new ArrayList<FluidStack>();
+          ArrayList<ItemStack> outputItems = new ArrayList<>();
+          ArrayList<FluidStack> outputFluids = new ArrayList<>();
           boolean found_Recipe = false;
           ItemStack[] tOut = new ItemStack[tRecipe.mOutputs.length];
           while ((tFluidList.size() > 0 || tInputList.size() > 0) && mCheckParallelCurrent < mParallel) {
-            if ((tRecipe.mEUt * (mCheckParallelCurrent + 1)) < nominalV && tRecipe
+            if ((tRecipe.mEUt * (mCheckParallelCurrent + 1L)) < nominalV && tRecipe
                     .isRecipeInputEqual(true, tFluids, tInputs)) {
               found_Recipe = true;
               for (int h = 0; h < tRecipe.mOutputs.length; h++) {
@@ -833,7 +829,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
             tmp = overStacks.toArray(tmp);
             tOut = ArrayUtils.addAll(tOut, tmp);
           }
-          List<ItemStack> tSList = new ArrayList<ItemStack>();
+          List<ItemStack> tSList = new ArrayList<>();
           for (ItemStack tS : tOut) {
             if (tS.stackSize > 0) {
               tSList.add(tS);
@@ -896,7 +892,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
     
     for (GT_MetaTileEntity_Hatch_InputBus tBus : mInputBusses) {
       if (modeBuses == 0) {
-        ArrayList<ItemStack> tBusItems = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> tBusItems = new ArrayList<>();
         tBus.mRecipeMap = getRecipeMap();
         if (isValidMetaTileEntity(tBus)) {
           for (int i = tBus.getBaseMetaTileEntity().getSizeInventory() - 1; i >= 0; i--) {
@@ -927,12 +923,12 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
           if (!WorldProperties.needSpace(tRecipe, this)) {
             return false;
           }
-          ArrayList<ItemStack> outputItems = new ArrayList<ItemStack>();
-          ArrayList<FluidStack> outputFluids = new ArrayList<FluidStack>();
+          ArrayList<ItemStack> outputItems = new ArrayList<>();
+          ArrayList<FluidStack> outputFluids = new ArrayList<>();
           boolean found_Recipe = false;
           ItemStack[] tOut = new ItemStack[tRecipe.mOutputs.length];
           while ((tFluidList.size() > 0 || tInputList.size() > 0) && mCheckParallelCurrent < mParallel) {
-            if ((tRecipe.mEUt * (mCheckParallelCurrent + 1)) < nominalV && tRecipe
+            if ((tRecipe.mEUt * (mCheckParallelCurrent + 1L)) < nominalV && tRecipe
                 .isRecipeInputEqual(true, tFluids, tInputs)) {
               found_Recipe = true;
               for (int h = 0; h < tRecipe.mOutputs.length; h++) {
@@ -960,7 +956,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
             }
           }
           tOut = clean(tOut);
-          List<ItemStack> overStacks = new ArrayList<ItemStack>();
+          List<ItemStack> overStacks = new ArrayList<>();
           for (ItemStack stack : tOut) {
             while (stack.getMaxStackSize() < stack.stackSize) {
               ItemStack tmp = stack.copy();
@@ -974,7 +970,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
             tmp = overStacks.toArray(tmp);
             tOut = ArrayUtils.addAll(tOut, tmp);
           }
-          List<ItemStack> tSList = new ArrayList<ItemStack>();
+          List<ItemStack> tSList = new ArrayList<>();
           for (ItemStack tS : tOut) {
             if (tS.stackSize > 0) {
               tSList.add(tS);
@@ -1049,7 +1045,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
   
     for (GTMTE_BusHatch_Input tBus : mInputBusHatches) {
       if (modeBuses == 0) {
-        ArrayList<ItemStack> tBusItems = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> tBusItems = new ArrayList<>();
         tBus.mRecipeMap = getRecipeMap();
         if (isValidMetaTileEntity(tBus)) {
           for (int i = tBus.getBaseMetaTileEntity().getSizeInventory() - 1; i >= 0; i--) {
@@ -1085,7 +1081,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
           boolean found_Recipe = false;
           ItemStack[] tOut = new ItemStack[tRecipe.mOutputs.length];
           while ((tFluidList.size() > 0 || tInputList.size() > 0) && mCheckParallelCurrent < mParallel) {
-            if ((tRecipe.mEUt * (mCheckParallelCurrent + 1)) < nominalV && tRecipe
+            if ((tRecipe.mEUt * (mCheckParallelCurrent + 1L)) < nominalV && tRecipe
                     .isRecipeInputEqual(true, tFluids, tInputs)) {
               found_Recipe = true;
               for (int h = 0; h < tRecipe.mOutputs.length; h++) {
@@ -1113,7 +1109,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
             }
           }
           tOut = clean(tOut);
-          List<ItemStack> overStacks = new ArrayList<ItemStack>();
+          List<ItemStack> overStacks = new ArrayList<>();
           for (ItemStack stack : tOut) {
             while (stack.getMaxStackSize() < stack.stackSize) {
               ItemStack tmp = stack.copy();
@@ -1127,7 +1123,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
             tmp = overStacks.toArray(tmp);
             tOut = ArrayUtils.addAll(tOut, tmp);
           }
-          List<ItemStack> tSList = new ArrayList<ItemStack>();
+          List<ItemStack> tSList = new ArrayList<>();
           for (ItemStack tS : tOut) {
             if (tS.stackSize > 0) {
               tSList.add(tS);
@@ -1190,7 +1186,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
     
     for (GT_MetaTileEntity_Hatch_InputBus tBus : mInputBusses) {
       if (modeBuses == 0) {
-        ArrayList<ItemStack> tBusItems = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> tBusItems = new ArrayList<>();
         tBus.mRecipeMap = getRecipeMap();
         if (isValidMetaTileEntity(tBus)) {
           for (int i = tBus.getBaseMetaTileEntity().getSizeInventory() - 1; i >= 0; i--) {
@@ -1221,12 +1217,12 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
           if (!WorldProperties.needSpace(tRecipe, this)) {
             return false;
           }
-          ArrayList<ItemStack> outputItems = new ArrayList<ItemStack>();
-          ArrayList<FluidStack> outputFluids = new ArrayList<FluidStack>();
+          ArrayList<ItemStack> outputItems = new ArrayList<>();
+          ArrayList<FluidStack> outputFluids = new ArrayList<>();
           boolean found_Recipe = false;
           ItemStack[] tOut = new ItemStack[tRecipe.mOutputs.length];
           while ((tFluidList.size() > 0 || tInputList.size() > 0) && mCheckParallelCurrent < mParallel) {
-            if ((tRecipe.mEUt * (mCheckParallelCurrent + 1)) < nominalV && tRecipe
+            if ((tRecipe.mEUt * (mCheckParallelCurrent + 1L)) < nominalV && tRecipe
                 .isRecipeInputEqual(true, tFluids, tInputs)) {
               found_Recipe = true;
               for (int h = 0; h < tRecipe.mOutputs.length; h++) {
@@ -1254,7 +1250,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
             }
           }
           tOut = clean(tOut);
-          List<ItemStack> overStacks = new ArrayList<ItemStack>();
+          List<ItemStack> overStacks = new ArrayList<>();
           for (ItemStack stack : tOut) {
             while (stack.getMaxStackSize() < stack.stackSize) {
               ItemStack tmp = stack.copy();
@@ -1268,7 +1264,7 @@ public abstract class GT_MetaTileEntity_MultiParallelBlockBase extends
             tmp = overStacks.toArray(tmp);
             tOut = ArrayUtils.addAll(tOut, tmp);
           }
-          List<ItemStack> tSList = new ArrayList<ItemStack>();
+          List<ItemStack> tSList = new ArrayList<>();
           for (ItemStack tS : tOut) {
             if (tS.stackSize > 0) {
               tSList.add(tS);
