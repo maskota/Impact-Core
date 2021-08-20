@@ -1,4 +1,4 @@
-package com.impact;
+package com.impact.world;
 
 import com.impact.mods.gregtech.tileentities.multi.units.GTMTE_Aerostat;
 import com.impact.mods.gregtech.tileentities.multi.units.GTMTE_Spaceport;
@@ -20,7 +20,7 @@ public enum World_Interaction {
     public static List<GTMTE_Aerostat> World_AeroStat = new LinkedList<>();
 
     public static boolean check(World_Interaction wInChecker, World_Interaction ws) {
-        return wInChecker.equals(ALL) || wInChecker.equals(ws);
+        return wInChecker.equals(ws) || wInChecker.equals(ALL);
     }
 
     public static void clearWorld(World_Interaction w) {
@@ -43,7 +43,7 @@ public enum World_Interaction {
                         //SpacePort Checker
                         if (check(w, SPACEPORT) && mte instanceof GTMTE_Spaceport) {
                             GTMTE_Spaceport spaceport = (GTMTE_Spaceport) mte;
-                            World_SpacePort.add(spaceport);
+                            if (!spaceport.name.isEmpty()) World_SpacePort.add(spaceport);
                         }
                         //AeroStat Checker
 //                        if (check(w, AEROSTAT) && mte instanceof GTMTE_Aerostat) {

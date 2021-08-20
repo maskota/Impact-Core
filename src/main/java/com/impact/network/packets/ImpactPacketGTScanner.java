@@ -1,9 +1,10 @@
-package com.impact.network;
+package com.impact.network.packets;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.impact.mods.gtscanner.GTScanner;
+import com.impact.network.ImpactPacket;
 import gregtech.common.GT_UndergroundOil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

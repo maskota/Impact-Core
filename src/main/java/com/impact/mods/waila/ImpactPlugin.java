@@ -278,7 +278,7 @@ public class ImpactPlugin extends PluginBase {
 			}
 
 			if (spaceport != null) {
-				tag.setString("spaceportName", spaceport.getBaseMetaTileEntity().getWorld().provider.getDimensionName());
+				tag.setString("spaceportName", spaceport.name);
 			}
 			
 			if (reactorHatch != null) {

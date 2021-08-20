@@ -9,6 +9,8 @@ import com.impact.mods.gregtech.gui.aerostat.Container_FirstAerostat;
 import com.impact.mods.gregtech.gui.aerostat.Countainer_SelectAerostat;
 import com.impact.mods.gregtech.gui.aerostat.GUI_FirstAerostat;
 import com.impact.mods.gregtech.gui.aerostat.GUI_SelectAerostat;
+import com.impact.mods.gregtech.gui.impl.Container_SetString;
+import com.impact.mods.gregtech.gui.impl.GUI_SetString;
 import com.impact.mods.gregtech.gui.regulatechest.Container_ValueRegulateChest;
 import com.impact.mods.gregtech.gui.regulatechest.GUI_ValueRegulateChest;
 import com.impact.mods.railcraft.carts.item.client.OpenableGUI;
@@ -25,7 +27,7 @@ import static com.impact.core.impactLog.WARNING;
 
 public class GUIHandler implements IGuiHandler {
 	
-	public static final int GUI_ID_Solar = 0, GUI_ID_Carts = 2, GUI_ID_LapTop = 3, GUI_ID_FirstAerostat = 4;
+	public static final int GUI_ID_Solar = 0, GUI_ID_Carts = 2, GUI_ID_LapTop = 3, GUI_ID_FirstAerostat = 4, GUI_ID_SetString = 7;
 	
 	public GUIHandler() {
 		NetworkRegistry.INSTANCE.registerGuiHandler(impact.instance, this);
@@ -68,6 +70,11 @@ public class GUIHandler implements IGuiHandler {
 					IGregTechTileEntity gte = (IGregTechTileEntity) te;
 					return new Container_ValueRegulateChest(player.inventory, gte);
 				}
+			case GUI_ID_SetString:
+				if (te instanceof IGregTechTileEntity) {
+					IGregTechTileEntity gte = (IGregTechTileEntity) te;
+					return new Container_SetString(player.inventory, gte);
+				}
 		}
 		WARNING("GUIHandler Server - Not Loaded");
 		return null;
@@ -106,6 +113,11 @@ public class GUIHandler implements IGuiHandler {
 				if (te instanceof IGregTechTileEntity) {
 					IGregTechTileEntity gte = (IGregTechTileEntity) te;
 					return new GUI_ValueRegulateChest(player.inventory, gte);
+				}
+			case GUI_ID_SetString:
+				if (te instanceof IGregTechTileEntity) {
+					IGregTechTileEntity gte = (IGregTechTileEntity) te;
+					return new GUI_SetString(player.inventory, gte);
 				}
 				INFO("GUIHandler Client - Loaded");
 		}

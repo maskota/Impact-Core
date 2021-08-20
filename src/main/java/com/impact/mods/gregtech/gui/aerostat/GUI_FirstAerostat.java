@@ -2,7 +2,7 @@ package com.impact.mods.gregtech.gui.aerostat;
 
 
 import com.impact.network.ImpactNetwork;
-import com.impact.network.ImpactPacketAerostat;
+import com.impact.network.packets.ImpactPacketAerostat;
 import gregtech.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import net.minecraft.client.Minecraft;

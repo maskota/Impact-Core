@@ -1,10 +1,11 @@
-package com.impact.network;
+package com.impact.network.packets;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.impact.mods.gregtech.gui.aerostat.Container_FirstAerostat;
 import com.impact.mods.gregtech.tileentities.multi.units.GTMTE_Aerostat;
+import com.impact.network.ImpactPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;

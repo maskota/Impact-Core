@@ -3,7 +3,7 @@ package com.impact.mods.gregtech.items;
 import com.impact.client.gui.GUIHandler;
 import com.impact.mods.gregtech.tileentities.multi.units.GTMTE_Aerostat;
 import com.impact.network.ImpactNetwork;
-import com.impact.network.ImpactPacketStringGui;
+import com.impact.network.packets.ImpactPacketStringGui;
 import com.impact.util.Utilits;
 import gregtech.api.interfaces.IItemBehaviour;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;

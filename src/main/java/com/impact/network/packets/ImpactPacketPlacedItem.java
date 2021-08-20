@@ -1,11 +1,11 @@
-package com.impact.network;
+package com.impact.network.packets;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import com.impact.common.block.itemblock.IB_IGlass;
 import com.impact.common.te.TilePlacedItem;
 import com.impact.loader.ItemRegistery;
+import com.impact.network.ImpactPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

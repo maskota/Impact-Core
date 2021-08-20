@@ -1,8 +1,13 @@
 package com.impact.util;
 
 import com.impact.util.vector.TeleportPoint;
+import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 
 public class PositionObject {
 	
@@ -35,6 +40,13 @@ public class PositionObject {
 		xPos = x;
 		yPos = y;
 		zPos = z;
+	}
+
+	public PositionObject(int x, int y, int z, int d) {
+		xPos = x;
+		yPos = y;
+		zPos = z;
+		dPos = d;
 	}
 	
 	/**
@@ -145,5 +157,27 @@ public class PositionObject {
 	public static IGregTechTileEntity getIGregTechTileEntity(IGregTechTileEntity igt, PositionObject obj) {
 		if (obj == null) return null;
 		return igt.getIGregTechTileEntity(obj.xPos, obj.yPos, obj.zPos);
+	}
+
+	public static IGregTechTileEntity isGT(PositionObject pos) {
+		TileEntity te = DimensionManager.getWorld(pos.dPos).getTileEntity(pos.xPos, pos.yPos, pos.zPos);
+		if (te instanceof IGregTechTileEntity) {
+			return (IGregTechTileEntity) te;
+		}
+		return null;
+	}
+
+	public void saveNBT(NBTTagCompound aNBT) {
+		aNBT.setInteger("poX", this.xPos);
+		aNBT.setInteger("poY", this.yPos);
+		aNBT.setInteger("poZ", this.zPos);
+		aNBT.setInteger("poD", this.dPos);
+	}
+
+	public void loadFromNBT(NBTTagCompound aNBT) {
+		this.xPos = aNBT.getInteger("poX");
+		this.yPos = aNBT.getInteger("poY");
+		this.zPos = aNBT.getInteger("poZ");
+		this.dPos = aNBT.getInteger("poD");
 	}
 }

@@ -2,6 +2,7 @@ package com.impact.network;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
+import com.impact.network.packets.*;
 import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.FMLOutboundHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -28,7 +29,7 @@ public class ImpactNetwork extends MessageToMessageCodec<FMLProxyPacket, ImpactP
     this.mChannel = NetworkRegistry.INSTANCE.newChannel("ImpactNetwork", this, new HandlerShared());
     this.mSubChannels = new ImpactPacket[]{
         new ImpactPacketGTScanner(), new ImpactPacketStringGui(), new ImpactPacketMetaDataPacket(), new ImpactPacketPlacedItem(),
-            new ImpactPacketAerostat(), new ImpactPacketGuiTextField()
+            new ImpactPacketAerostat(), new ImpactPacketGuiTextField(), new ImpactPacketSetString()
     };
   }
 

@@ -1,54 +1,42 @@
 package com.impact.mods.gregtech.tileentities.multi.units;
 
-import com.impact.World_Interaction;
+import com.impact.client.gui.GUIHandler;
 import com.impact.mods.gregtech.blocks.Casing_Helper;
 import com.impact.mods.gregtech.enums.Texture;
-import com.impact.mods.gregtech.gui.spaceport.Countainer_SpacePort;
+import com.impact.mods.gregtech.gui.impl.IStringSetter;
+import com.impact.mods.gregtech.gui.spaceport.Container_SpacePort;
 import com.impact.mods.gregtech.gui.spaceport.GUI_SpacePort;
 import com.impact.mods.gregtech.tileentities.multi.implement.GT_MetaTileEntity_MultiParallelBlockBase;
 import com.impact.util.PositionObject;
 import com.impact.util.Utilits;
-import com.impact.util.string.IGTE_NameHash;
 import com.impact.util.vector.TeleportPoint;
 import com.impact.util.vector.Teleportation_World;
-import gravisuite.Helpers;
-import gravisuite.ServerProxy;
+import com.impact.world.World_Interaction;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.objects.GT_RenderedTexture;
-import gregtech.api.util.GT_Utility;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 
-import java.util.*;
+import java.util.ArrayList;
 
-public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase {
-
-    public int aerID = 1;
-    public int curID = 1;
+public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase implements IStringSetter {
 
     public PositionObject targetSpacePort;
-    public List<GTMTE_Spaceport> spacePortWorldOwner = new LinkedList<>();
-    public static ArrayList<String> owners = new ArrayList<>();
+    public ArrayList<String> owners = new ArrayList<>();
 
-    public String nameHash = "";
-    public String hash = "0000";
-    public Random r = new Random();
-
+    public String name = "";
     Block CASING = Casing_Helper.sCaseCore2;
     byte CASING_META = 14;
     ITexture INDEX_CASE = Textures.BlockIcons.casingTexturePages[3][CASING_META + 16];
     int CASING_TEXTURE_ID = CASING_META + 16 + 128 * 3;
+    private boolean firstChecker = true;
 
     public GTMTE_Spaceport(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -59,8 +47,7 @@ public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase {
     }
 
     @Override
-    public ITexture[] getTexture(final IGregTechTileEntity iAm, final byte aSide,
-                                 final byte aFacing,
+    public ITexture[] getTexture(final IGregTechTileEntity iAm, final byte aSide, final byte aFacing,
                                  final byte aColorIndex, final boolean aActive, final boolean aRedstone) {
         return aSide == 1
                 ? new ITexture[]{INDEX_CASE, new GT_RenderedTexture(
@@ -72,6 +59,7 @@ public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase {
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity iAm) {
+
         return new GTMTE_Spaceport(this.mName);
     }
 
@@ -99,28 +87,28 @@ public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase {
 
     @Override
     public Object getClientGUI(int aID, InventoryPlayer aPlayerInventory, IGregTechTileEntity aBaseMetaTileEntity) {
-        return new GUI_SpacePort(aPlayerInventory, aBaseMetaTileEntity, nameHash);
+        return new GUI_SpacePort(aPlayerInventory, aBaseMetaTileEntity, name);
     }
 
     @Override
     public Object getServerGUI(int aID, InventoryPlayer aPlayerInventory, IGregTechTileEntity aBaseMetaTileEntity) {
-        return new Countainer_SpacePort(aPlayerInventory, aBaseMetaTileEntity);
+        return new Container_SpacePort(aPlayerInventory, aBaseMetaTileEntity);
     }
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        aNBT.setInteger("aerID", aerID);
-        aNBT.setInteger("curID", curID);
-        aNBT.setString("hash", hash);
+        if (targetSpacePort != null) targetSpacePort.saveNBT(aNBT);
+        aNBT.setString("name", name);
+        aNBT.setBoolean("firstChecker", firstChecker);
     }
 
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        curID = aNBT.getInteger("curID");
-        aerID = aNBT.getInteger("aerID");
-        hash = aNBT.getString("hash");
+        targetSpacePort.loadFromNBT(aNBT);
+        name = aNBT.getString("name");
+        firstChecker = aNBT.getBoolean("firstChecker");
     }
 
     @Override
@@ -139,72 +127,76 @@ public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase {
         if (iAm.isServerSide()) {
 
         }
-        // TODO: 05.08.2021 Получить при старте мира загруженые машины и
-        //  сделать им статические ID чтобы можно было найти из списка
-        //  по тому же методу что и всегда найти машину (из полученного списка машин - аррей спайспортов)
-        //  добавить публичную станцию или нет (проверку овнера, если есть то приват, нету - паблик)
-        //  Также сделать при старте для все частот статическую функцию, которая будет записывать в свой список все что нужно
     }
 
     @Override
     public void onScrewdriverRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
         super.onScrewdriverRightClick(aSide, aPlayer, aX, aY, aZ);
         //GT_Utility.sendChatToPlayer(aPlayer, "");
-
-
     }
 
     @Override
     public void inValidate() {
         World_Interaction.worldInteractionChecker(World_Interaction.SPACEPORT);
-        checkOnlyOwnerSpacePorts();
         super.inValidate();
     }
 
     @Override
     public void onFirstTick(IGregTechTileEntity iAm) {
         super.onFirstTick(iAm);
-        nameHash = new IGTE_NameHash(iAm).getNameHash();
         World_Interaction.worldInteractionChecker(World_Interaction.SPACEPORT);
-        checkOnlyOwnerSpacePorts();
-        hash = String.format("%04d", r.nextInt(10001));
-        // TODO: 08.08.2021 Список игроков -> список машин
-       // todo ImmutablePair<UUID, String> as = new ImmutablePair<>(new UUID(1, 2), "23");
     }
 
     public String getDimensionName() {
         return getBaseMetaTileEntity().getWorld().provider.getDimensionName();
     }
 
-    public void checkOnlyOwnerSpacePorts() {
-        spacePortWorldOwner.clear();
-        spacePortWorldOwner.addAll(World_Interaction.World_SpacePort);
-    }
-
-    public String getOwner() {
-        return getBaseMetaTileEntity().getOwnerName();
-    }
-
-    public void mapOfOwners() {
-        LinkedHashMap<String, ArrayList<GTMTE_Spaceport>> tOwners = new LinkedHashMap<>();
-
-        for (GTMTE_Spaceport a : World_Interaction.World_SpacePort) {
-            boolean tru = false;
-            for (String owner : owners) {
-                if (a.getOwner().equals(owner)) {
-                    tru = true;
-                }
+    @Override
+    public void onNotePadRightClick(ItemStack stack, byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
+        super.onNotePadRightClick(stack, aSide, aPlayer, aX, aY, aZ);
+        Utilits.openTileGui(aPlayer, GUIHandler.GUI_ID_SetString, getBaseMetaTileEntity());
+        if (getBaseMetaTileEntity().isServerSide()) {
+            NBTTagCompound tNBT = stack.getTagCompound();
+            if (firstChecker) {
+                PositionObject thisPO = new PositionObject(getBaseMetaTileEntity());
+                tNBT.setInteger("mXCoordIn", thisPO.xPos);
+                tNBT.setInteger("mYCoordIn", thisPO.yPos);
+                tNBT.setInteger("mZCoordIn", thisPO.zPos);
+                tNBT.setInteger("mDCoordIn", thisPO.dPos);
+                firstChecker = false;
+            } else {
+                targetSpacePort.xPos = tNBT.getInteger("mXCoordIn");
+                targetSpacePort.yPos = tNBT.getInteger("mYCoordIn");
+                targetSpacePort.zPos = tNBT.getInteger("mZCoordIn");
+                targetSpacePort.dPos = tNBT.getInteger("mDCoordIn");
             }
-            if (tru) spacePortWorldOwner.add(a);
         }
+    }
+
+    @Override
+    public boolean onRightclick(IGregTechTileEntity aBaseMetaTileEntity, EntityPlayer aPlayer) {
+        return super.onRightclick(aBaseMetaTileEntity, aPlayer);
+    }
+
+    public int getTargetIDPort() {
+        int id = 0;
+        for (; id < World_Interaction.World_SpacePort.size(); id++) {
+            PositionObject po = new PositionObject(World_Interaction.World_SpacePort.get(id).getBaseMetaTileEntity());
+            if (PositionObject.checkComparePositionWithDim(po, targetSpacePort)) {
+                return id;
+            }
+        }
+        return -1;
     }
 
     public void teleportEntity(Entity entity) {
-        TeleportPoint point = PositionObject.toTeleportPoint(
-                new PositionObject(spacePortWorldOwner.get(aerID-1).getBaseMetaTileEntity()));
+        TeleportPoint point = PositionObject.toTeleportPoint(targetSpacePort);
         PositionObject tPos = new PositionObject(getBaseMetaTileEntity());
-        if (tPos.dPos != point.dimID) {
-            Teleportation_World.teleportEntity(entity, point);
-        }
+        if (tPos.dPos != point.dimID) Teleportation_World.teleportEntity(entity, point);
+    }
+
+    @Override
+    public void setString(String str) {
+        name = str;
     }
 }

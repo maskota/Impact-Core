@@ -1,16 +1,12 @@
-package com.impact.network;
+package com.impact.network.packets;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.impact.mods.gregtech.gui.regulatechest.Container_ValueRegulateChest;
 import com.impact.mods.gregtech.tileentities.basic.GTMTE_RegulateDigitalChest;
-import gregtech.api.net.GT_Packet;
-import gregtech.common.items.GT_VolumetricFlask;
+import com.impact.network.ImpactPacket;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
