@@ -1,5 +1,7 @@
 package com.impact.mods.gregtech.gui.impl;
 
+import com.impact.client.gui.GUIHandler;
+import com.impact.util.Utilits;
 import gregtech.api.gui.GT_ContainerMetaTile_Machine;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;

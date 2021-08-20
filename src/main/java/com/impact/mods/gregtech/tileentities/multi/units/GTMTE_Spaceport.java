@@ -1,6 +1,5 @@
 package com.impact.mods.gregtech.tileentities.multi.units;
 
-import com.impact.client.gui.GUIHandler;
 import com.impact.mods.gregtech.blocks.Casing_Helper;
 import com.impact.mods.gregtech.enums.Texture;
 import com.impact.mods.gregtech.gui.impl.IStringSetter;
@@ -8,7 +7,6 @@ import com.impact.mods.gregtech.gui.spaceport.Container_SpacePort;
 import com.impact.mods.gregtech.gui.spaceport.GUI_SpacePort;
 import com.impact.mods.gregtech.tileentities.multi.implement.GT_MetaTileEntity_MultiParallelBlockBase;
 import com.impact.util.PositionObject;
-import com.impact.util.Utilits;
 import com.impact.util.vector.TeleportPoint;
 import com.impact.util.vector.Teleportation_World;
 import com.impact.world.World_Interaction;
@@ -16,20 +14,28 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Input;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_InputBus;
 import gregtech.api.objects.GT_RenderedTexture;
+import gregtech.api.util.GT_Utility;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase implements IStringSetter {
 
     public PositionObject targetSpacePort;
     public ArrayList<String> owners = new ArrayList<>();
+    public GTMTE_Spaceport targetPort;
+    public FluidStack rocketFuel;
+    public long rocketFuelAmount = 0;
 
     public String name = "";
     Block CASING = Casing_Helper.sCaseCore2;
@@ -125,8 +131,55 @@ public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase im
     public void onPostTick(IGregTechTileEntity iAm, long aTick) {
         super.onPostTick(iAm, aTick);
         if (iAm.isServerSide()) {
+            if (aTick % 20 * 5 == 0 && startConnection() != null) {
 
+
+                rocketFuelAmount = 5000; //todo debug
+
+
+                if (rocketFuelAmount >= calcFuel()) {
+
+                    rocketFuelAmount -= calcFuel();
+
+                    List<ItemStack> items = new ArrayList<>();
+                    List<FluidStack> fluids = new ArrayList<>();
+
+                    for (GT_MetaTileEntity_Hatch_InputBus inputBus : mInputBusses) {
+                        for (ItemStack stack : inputBus.mInventory) {
+                            items.add(stack);
+                            depleteInput(stack);
+                        }
+                    }
+
+                    for (GT_MetaTileEntity_Hatch_Input input : mInputHatches) {
+                        fluids.add(input.mFluid);
+                        depleteInput(input.mFluid);
+                    }
+
+                    for (ItemStack is : items) targetPort.addOutput(is);
+                    for (FluidStack fs : fluids) targetPort.addOutput(fs);
+
+                    items.clear();
+                    fluids.clear();
+                }
+            }
         }
+    }
+
+    public int calcFuel() {
+        return 1000; //todo refactor
+    }
+
+    public GTMTE_Spaceport startConnection() {
+        if (targetSpacePort != null) {
+            IGregTechTileEntity igt = PositionObject.isGT(targetSpacePort);
+            if (igt != null && igt.getMetaTileEntity() instanceof GTMTE_Spaceport) {
+                targetPort = (GTMTE_Spaceport) igt.getMetaTileEntity();
+                targetPort.targetSpacePort = new PositionObject(getBaseMetaTileEntity());
+                return targetPort;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -152,25 +205,8 @@ public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase im
     }
 
     @Override
-    public void onNotePadRightClick(ItemStack stack, byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
-        super.onNotePadRightClick(stack, aSide, aPlayer, aX, aY, aZ);
-        Utilits.openTileGui(aPlayer, GUIHandler.GUI_ID_SetString, getBaseMetaTileEntity());
-        if (getBaseMetaTileEntity().isServerSide()) {
-            NBTTagCompound tNBT = stack.getTagCompound();
-            if (firstChecker) {
-                PositionObject thisPO = new PositionObject(getBaseMetaTileEntity());
-                tNBT.setInteger("mXCoordIn", thisPO.xPos);
-                tNBT.setInteger("mYCoordIn", thisPO.yPos);
-                tNBT.setInteger("mZCoordIn", thisPO.zPos);
-                tNBT.setInteger("mDCoordIn", thisPO.dPos);
-                firstChecker = false;
-            } else {
-                targetSpacePort.xPos = tNBT.getInteger("mXCoordIn");
-                targetSpacePort.yPos = tNBT.getInteger("mYCoordIn");
-                targetSpacePort.zPos = tNBT.getInteger("mZCoordIn");
-                targetSpacePort.dPos = tNBT.getInteger("mDCoordIn");
-            }
-        }
+    public void onNotePadRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
+        super.onNotePadRightClick(aSide, aPlayer, aX, aY, aZ);
     }
 
     @Override
@@ -189,10 +225,15 @@ public class GTMTE_Spaceport extends GT_MetaTileEntity_MultiParallelBlockBase im
         return -1;
     }
 
-    public void teleportEntity(Entity entity) {
+    public void teleportEntity(EntityPlayer player) {
         TeleportPoint point = PositionObject.toTeleportPoint(targetSpacePort);
         PositionObject tPos = new PositionObject(getBaseMetaTileEntity());
-        if (tPos.dPos != point.dimID) Teleportation_World.teleportEntity(entity, point);
+        if (tPos.dPos != point.dimID) {
+            Teleportation_World.teleportEntity(player, point);
+            GT_Utility.sendChatToPlayer(player, "Teleportation successful");
+            return;
+        }
+        GT_Utility.sendChatToPlayer(player, "Teleportation failed");
     }
 
     @Override

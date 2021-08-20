@@ -40,11 +40,14 @@ public class Container_SpacePort extends GT_ContainerMetaTile_Machine {
                 IMetaTileEntity imte = this.mTileEntity.getMetaTileEntity();
                 if (imte instanceof GTMTE_Spaceport) {
                     GTMTE_Spaceport spaceport = ((GTMTE_Spaceport) this.mTileEntity.getMetaTileEntity());
-                    if (aSlotIndex == 0) spaceport.teleportEntity(aPlayer);
+                    if (aSlotIndex == 0) {
+                        if (spaceport.targetPort != null) {
+                            spaceport.teleportEntity(aPlayer);
+                        }
+                    }
                 }
             }
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
         return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
     }
 
