@@ -1,7 +1,7 @@
 package com.impact.world;
 
 import com.impact.mods.gregtech.tileentities.multi.units.GTMTE_Aerostat;
-import com.impact.mods.gregtech.tileentities.multi.units.GTMTE_Spaceport;
+import com.impact.mods.gregtech.tileentities.multi.units.spaceportsystem.GTMTE_Spaceport;
 import cpw.mods.fml.common.FMLCommonHandler;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;

@@ -13,6 +13,7 @@ import com.impact.mods.gregtech.tileentities.multi.parallelsystem.GTMTE_Parallel
 import com.impact.mods.gregtech.tileentities.multi.parallelsystem.GTMTE_SpaceSatellite_Receiver;
 import com.impact.mods.gregtech.tileentities.multi.parallelsystem.GTMTE_SpaceSatellite_Transmitter;
 import com.impact.mods.gregtech.tileentities.multi.storage.hatch.GTMTE_TankHatch;
+import com.impact.mods.gregtech.tileentities.multi.units.spaceportsystem.GTMTE_Spaceport_Connector;
 import gregtech.GT_Mod;
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.Materials;
@@ -236,12 +237,15 @@ public class Basic_Register {
 
     Regulate_Digital_Chest.set(new GTMTE_RegulateDigitalChest(ID2++, "impact.machine.regulatechest",
             "Regulate Digital Chest", 1).getStackForm(1L));
-  
+
     BusHatch_Input.set(new GTMTE_BusHatch_Input(ID2++, "impact.hatch.bushatch.input",
             "Input Item/Fluid Bus", 3).getStackForm(1L));
-  
+
     Regulate_One_Stack_Chest.set(new GTMTE_OneStackRegulateChest(ID2++, "impact.machine.onestackregulatechest",
             "One Stack Regulate Chest", 1).getStackForm(1L));
+
+    Spaceport_Connector.set(new GTMTE_Spaceport_Connector(ID2++, "impact.machine.spaceportconnector",
+            "Spaceport Communication Connector").getStackForm(1L));
 
 
     INFO("Last ID Basic_Register.java: " + ID2);//14587

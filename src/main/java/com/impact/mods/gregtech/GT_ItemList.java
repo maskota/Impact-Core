@@ -25,7 +25,7 @@ public enum GT_ItemList implements IItemContainer {
   packEris, packGanymed, packHaumea, packIapetus, packIo, packMakeMake, packMercury, packMoon,
   packOberon, packPhobos, packPluto, packTCetiE, packTitan, packTriton, packVegaB, packVenus, packMars,
   packProteus, packAsteroids, spacebox1, spacebox2, spacebox3, spacebox4, spacebox5, spacebox6, spacebox7,
-  spacebox8, Aerostat, Spaceport_Connector,
+  spacebox8, Aerostat,
 
   ULVMotor, ULVPiston, ULVRobotArm, ULVConveyorModule, ULVPump,
 
@@ -47,6 +47,9 @@ public enum GT_ItemList implements IItemContainer {
   Generator_Semi_Turbine_EV, Generator_Steam_Turbine_IV, Generator_Diesel_IV, Generator_Gas_Turbine_IV, Generator_Semi_Turbine_IV,
 
   Water_Tank, Creative_Tank, Regulate_Digital_Chest, Regulate_One_Stack_Chest,
+
+  //spaceport
+  Spaceport_Connector,
 
   //HATCHES
   Hatch_Output_Prim, Bus_Input_Prim, Bus_Output_Prim, Hatch_Output_Pump,

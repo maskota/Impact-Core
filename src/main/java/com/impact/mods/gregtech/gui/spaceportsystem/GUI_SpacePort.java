@@ -1,8 +1,8 @@
-package com.impact.mods.gregtech.gui.spaceport;
+package com.impact.mods.gregtech.gui.spaceportsystem;
 
 import com.impact.world.World_Interaction;
 import com.impact.mods.gregtech.gui.GT_GUIContainerMT_Machine;
-import com.impact.mods.gregtech.tileentities.multi.units.GTMTE_Spaceport;
+import com.impact.mods.gregtech.tileentities.multi.units.spaceportsystem.GTMTE_Spaceport;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.EnumChatFormatting;
@@ -54,10 +54,18 @@ public class GUI_SpacePort extends GT_GUIContainerMT_Machine {
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		//this.fontRendererObj.drawString(mName, 33, 8, 16448255);
 		Container_SpacePort container = (Container_SpacePort) this.mContainer;
-		this.fontRendererObj.drawString("this name: " + mName, 33, 8, 16448255);
-		this.fontRendererObj.drawString(mStationName, 33, 18, 16448255);
+		//this.fontRendererObj.drawString("this name: " + mName, 33, 8, 16448255);
+		//this.fontRendererObj.drawString(mStationName, 33, 18, 16448255);
 		//this.fontRendererObj.drawString("Owner: " + EnumChatFormatting.GREEN + playerName, 33, 18, 16448255);
-		this.fontRendererObj.drawString(EnumChatFormatting.GREEN + targetStationName, 33, 28, 16448255);
+		if (container.targetID > 0) {
+			this.fontRendererObj.drawString("Countdown to flight: " + container.targetID/20 + "s", 33, 28, 16448255);
+			this.fontRendererObj.drawString(EnumChatFormatting.RED + "Waiting for flight..", 33, 38, 16448255);
+			if (container.targetID/20 < 3) {
+				this.fontRendererObj.drawString(EnumChatFormatting.GREEN + "Flight is performed..", 33, 48, 16448255);
+			}
+		} else {
+			this.fontRendererObj.drawString(EnumChatFormatting.GREEN + "Flight is done!", 33, 38, 16448255);
+		}
 	}
 	
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {

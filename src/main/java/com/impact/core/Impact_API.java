@@ -34,4 +34,6 @@ public class Impact_API {
    * The Space Elevator Frequencies
    */
   public static final Map<String, PositionObject> sAerostat = new LinkedHashMap<>();
+
+  public static final Map<String, int[]> sSpacePortConnector = new LinkedHashMap<>();
 }

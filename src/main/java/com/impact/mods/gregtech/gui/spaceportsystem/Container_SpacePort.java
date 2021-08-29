@@ -1,6 +1,6 @@
-package com.impact.mods.gregtech.gui.spaceport;
+package com.impact.mods.gregtech.gui.spaceportsystem;
 
-import com.impact.mods.gregtech.tileentities.multi.units.GTMTE_Spaceport;
+import com.impact.mods.gregtech.tileentities.multi.units.spaceportsystem.GTMTE_Spaceport;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.gui.GT_ContainerMetaTile_Machine;
@@ -41,7 +41,7 @@ public class Container_SpacePort extends GT_ContainerMetaTile_Machine {
                 if (imte instanceof GTMTE_Spaceport) {
                     GTMTE_Spaceport spaceport = ((GTMTE_Spaceport) this.mTileEntity.getMetaTileEntity());
                     if (aSlotIndex == 0) {
-                        if (spaceport.targetPort != null) {
+                        if (spaceport.targetPort != null && spaceport.mIsConnect) {
                             spaceport.teleportEntity(aPlayer);
                         }
                     }
@@ -56,7 +56,7 @@ public class Container_SpacePort extends GT_ContainerMetaTile_Machine {
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
         if ((this.mTileEntity.isClientSide()) || (this.mTileEntity.getMetaTileEntity() == null)) return;
-        targetID = ((GTMTE_Spaceport) this.mTileEntity.getMetaTileEntity()).getTargetIDPort();
+        targetID = ((GTMTE_Spaceport) this.mTileEntity.getMetaTileEntity()).mFrequency;
         for (Object crafter : this.crafters) {
             ICrafting var1 = (ICrafting) crafter;
             var1.sendProgressBarUpdate(this, 100, this.targetID & 0xFFFF);

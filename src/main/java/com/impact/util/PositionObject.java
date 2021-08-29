@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
 public class PositionObject {
-	
+
 	public int xPos = 0;
 	public int yPos = 0;
 	public int zPos = 0;
@@ -23,12 +23,14 @@ public class PositionObject {
 	 * @param igt - IGregTechTileEntity
 	 */
 	public PositionObject(IGregTechTileEntity igt) {
-		xPos = igt.getXCoord();
-		yPos = igt.getYCoord();
-		zPos = igt.getZCoord();
-		dPos = igt.getWorld().provider.dimensionId;
-		player = igt.getWorld().getPlayerEntityByName(igt.getOwnerName());
-		playerName = igt.getOwnerName();
+		if (igt != null) {
+			xPos = igt.getXCoord();
+			yPos = igt.getYCoord();
+			zPos = igt.getZCoord();
+			dPos = igt.getWorld().provider.dimensionId;
+			player = igt.getWorld().getPlayerEntityByName(igt.getOwnerName());
+			playerName = igt.getOwnerName();
+		}
 	}
 	
 	/**

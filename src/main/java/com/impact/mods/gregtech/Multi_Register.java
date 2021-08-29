@@ -10,6 +10,7 @@ import com.impact.mods.gregtech.tileentities.multi.processing.defaultmachines.*;
 import com.impact.mods.gregtech.tileentities.multi.processing.parallel.*;
 import com.impact.mods.gregtech.tileentities.multi.storage.*;
 import com.impact.mods.gregtech.tileentities.multi.units.*;
+import com.impact.mods.gregtech.tileentities.multi.units.spaceportsystem.GTMTE_Spaceport;
 
 public class Multi_Register {
 

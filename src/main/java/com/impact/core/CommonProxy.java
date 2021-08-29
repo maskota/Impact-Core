@@ -61,7 +61,8 @@ public class CommonProxy implements IGuiHandler {
     Impact_API.sElevatorSpace.clear();
     Impact_API.sCommunicationTower.clear();
     Impact_API.sAerostat.clear();
-    World_Interaction.worldInteractionChecker(World_Interaction.ALL);
+    Impact_API.sSpacePortConnector.clear();
+//    World_Interaction.worldInteractionChecker(World_Interaction.ALL);
   }
 
   public void onServerStopping() {
@@ -69,5 +70,6 @@ public class CommonProxy implements IGuiHandler {
     Impact_API.sElevatorSpace.clear();
     Impact_API.sCommunicationTower.clear();
     Impact_API.sAerostat.clear();
+    Impact_API.sSpacePortConnector.clear();
   }
 }
