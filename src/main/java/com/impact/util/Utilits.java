@@ -35,10 +35,6 @@ public class Utilits {
     }
     return true;
   }
-  
-  public static String translate(String text) {
-    return translateToLocal("tooltip." + text);
-  }
 
   public static String translateGTItemStack(ItemStack itemStack) {
     if (!GT_Utility.isStackValid(itemStack)) {

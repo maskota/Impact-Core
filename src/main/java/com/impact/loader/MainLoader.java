@@ -29,6 +29,7 @@ import com.impact.mods.gregtech.Multi_Register;
 import com.impact.mods.gregtech.blocks.Casing_Helper;
 import com.impact.mods.opencomputers.Driver_Register;
 import com.impact.mods.railcraft.carts.item.events.Module;
+import com.impact.util.Language;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -149,6 +150,8 @@ public class MainLoader {
     new Basic_Register().run();
     new GT_WorldGenRegister().run();
     new ModLoader().run();
+
+    Language.registerStaticLanguage();
 
     for (Module module : getModules()) {
       if (module.getIsActive()) {
